@@ -65,6 +65,7 @@ class TeamHMM:
             return False
 
         try:
+            import warnings
             self.model = GaussianHMM(
                 n_components=self.n_states,
                 covariance_type="diag",
@@ -72,7 +73,9 @@ class TeamHMM:
                 random_state=42,
                 init_params="stmc",
             )
-            self.model.fit(obs)
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                self.model.fit(obs)
             self._fitted = True
             return True
         except Exception as e:
