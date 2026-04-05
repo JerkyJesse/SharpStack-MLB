@@ -13,6 +13,7 @@ Packages: scikit-learn (optional, falls back to numpy linear approximation)
 """
 
 import logging
+import warnings
 from collections import defaultdict
 
 import numpy as np
@@ -35,7 +36,7 @@ class SVMPredictor:
     """
 
     def __init__(self, sport="nfl", svm_C=1.0, svm_kernel="rbf",
-                 svm_gamma="scale", svm_max_iter=1000, **kwargs):
+                 svm_gamma="scale", svm_max_iter=5000, **kwargs):
         self.sport = sport
         self.C = float(svm_C)
         self.kernel = svm_kernel
@@ -111,7 +112,9 @@ class SVMPredictor:
                 random_state=42,
                 class_weight="balanced",
             )
-            self._svm.fit(X_scaled, y.astype(int))
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                self._svm.fit(X_scaled, y.astype(int))
             self._fitted = True
             logging.debug("SVM (sklearn) trained: %d samples, %d features, C=%.1f",
                           len(X), X.shape[1], self.C)
