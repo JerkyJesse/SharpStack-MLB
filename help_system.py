@@ -37,7 +37,7 @@ def show_help(topic=""):
             print("  Examples: %s" % "  ".join(chi(e) for e in examples))
 
     if not topic:
-        hdr("MLB MONEYBALL - PREDICTS $1 TRACKER  .  HELP")
+        hdr("MLB SHARPSTACK - PREDICTS $1 TRACKER  .  HELP")
         print("""
   QUICK WORKFLOW SUMMARY
   1. Run 'backtest' FIRST -> fits Platt calibration scaler

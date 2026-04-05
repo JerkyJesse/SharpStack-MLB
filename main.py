@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-MLB MONEYBALL + PREDICTS $1 CONTRACT TRACKER
+MLB SHARPSTACK + PREDICTS $1 CONTRACT TRACKER
 v3: Elo + XGBoost ensemble, rest days, injury awareness
 """
 
@@ -465,7 +465,7 @@ def dispatch(cmd, model, csv_file):
 
 def main():
     print(Back.GREEN + Fore.BLACK + Style.BRIGHT
-          + "  MLB MONEYBALL  [v4 - 35-Model Mega-Ensemble]  "
+          + "  MLB SHARPSTACK  [v4 - 35-Model Mega-Ensemble]  "
           + Style.RESET_ALL)
     div(80)
     print("""

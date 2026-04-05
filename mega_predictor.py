@@ -1,6 +1,6 @@
 """Mega-Ensemble Live Predictor.
 
-Initializes all 31 base models, replays game history through them,
+Initializes all 35 base models, replays game history through them,
 loads the trained meta-learner, and provides live predictions that
 use the full mega-ensemble for bounded adjustment on top of Elo.
 
@@ -61,7 +61,7 @@ except ImportError:
 
 
 class MegaPredictor:
-    """Live prediction engine using all 31 mega-ensemble models.
+    """Live prediction engine using all 35 mega-ensemble models.
 
     Initializes all base models, replays game history to bring them
     to current state, loads the trained meta-learner, and provides
@@ -113,7 +113,7 @@ class MegaPredictor:
                          "run 'mega' backtest first to train it", meta_file)
             return
 
-        # ── Initialize all 31 base models ──────────────────────────
+        # ── Initialize all 35 base models ──────────────────────────
         start = time.time()
 
         # HMM

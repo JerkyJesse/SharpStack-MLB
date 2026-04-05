@@ -1,4 +1,4 @@
-# MLB Moneyball -- 35-Model Mega-Ensemble
+# SharpStack-MLB -- 35-Model Mega-Ensemble
 
 A production-grade MLB game prediction system that fuses 35 independent models -- spanning Elo ratings, gradient boosting, Hidden Markov Models, Kalman filters, PageRank, neural networks, survival analysis, information theory, game theory, and classical baseball sabermetrics -- into a single calibrated probability through a walk-forward meta-learner. Every model trains on real MLB data pulled from completely free APIs (MLB Stats API, ESPN injuries, Open-Meteo weather). The system includes a full Predicts $1 binary contract trading ledger with Kelly criterion position sizing, live score tracking, auto-settlement, and monthly P&L charting. All 162-game-season parameters are tuned through a 7-phase exhaustive optimizer with multithreaded backtesting and optional GPU acceleration.
 

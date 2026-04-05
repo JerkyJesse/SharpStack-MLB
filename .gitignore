@@ -1,6 +1,7 @@
 # ── Runtime state files (generated, not source) ──
 *_elo_ratings.json
 *_elo_settings.json
+*_elo_settings_backup.json
 *_platt_scaler.json
 *_isotonic_scaler.json
 *_beta_scaler.json
