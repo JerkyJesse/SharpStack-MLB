@@ -218,11 +218,11 @@ Every model runs independently on the same game-by-game walk-forward loop. Their
 
 ### Elo-Anchored Bounded Adjustment
 
-The Elo model serves as the anchor probability. The meta-learner (trained on all 31 base model outputs) produces an adjustment that is **clamped** to `+/- max_adj` (default 0.10). This means even if all exotic models disagree with Elo, the final probability can shift at most 10 percentage points. This design prevents catastrophic predictions from untested models while allowing proven signal to improve accuracy.
+The Elo model serves as the anchor probability. The meta-learner (trained on all 35 base model outputs) produces an adjustment that is **clamped** to `+/- max_adj` (default 0.10). This means even if all exotic models disagree with Elo, the final probability can shift at most 10 percentage points. This design prevents catastrophic predictions from untested models while allowing proven signal to improve accuracy.
 
 ### Multithreaded Training
 
-All 31 base models run inside a `ThreadPoolExecutor`. On a typical 8-core machine, the mega-ensemble backtest completes 3-5x faster than sequential execution. Each model receives the same game-by-game data and produces an independent probability estimate.
+All 35 base models run inside a `ThreadPoolExecutor`. On a typical 8-core machine, the mega-ensemble backtest completes 3-5x faster than sequential execution. Each model receives the same game-by-game data and produces an independent probability estimate.
 
 ### GPU Acceleration
 
@@ -938,7 +938,7 @@ Open positions can be marked to current market prices at any time using `mark`. 
 
 ### Multithreading
 
-The mega-ensemble uses `concurrent.futures.ThreadPoolExecutor` to run all 31 base models in parallel. On typical hardware:
+The mega-ensemble uses `concurrent.futures.ThreadPoolExecutor` to run all 35 base models in parallel. On typical hardware:
 
 - **4-core machine**: ~2-3x speedup over sequential
 - **8-core machine**: ~3-5x speedup over sequential

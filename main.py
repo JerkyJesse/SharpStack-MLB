@@ -465,7 +465,7 @@ def dispatch(cmd, model, csv_file):
 
 def main():
     print(Back.GREEN + Fore.BLACK + Style.BRIGHT
-          + "  MLB MONEYBALL  [v4 - 31-Model Mega-Ensemble]  "
+          + "  MLB MONEYBALL  [v4 - 35-Model Mega-Ensemble]  "
           + Style.RESET_ALL)
     div(80)
     print("""
@@ -474,7 +474,7 @@ WORKFLOW:
 2. Type team name (e.g. Yankees) -> opponent -> home? (a/b/n)?
 3. See calibrated prediction + key player metrics
 4. Type 'y' to log moneyline contract  |  'resolve' after game
-5. Run %s for 31-model ensemble  |  %s to find best settings
+5. Run %s for 35-model ensemble  |  %s to find best settings
 
 PREDICTIONS: <teamname> | today | tomorrow | all | players | injuries | settings
 
@@ -487,14 +487,14 @@ ELO OPT:    grid | genetic | bayesian | autoopt | superopt | singleopt | results
 VALIDATE:    purgedcv | cpcv | pbo | montecarlo | convergence | sliding
              rollingcal | conformal | betacal | kelly
 
-MEGA (31 models):
+MEGA (35 models):
   mega                Run mega-ensemble backtest (26+ models)
   mega optimize       7-phase per-model optimization (best results at all cost)
   mega quick          Baseline + per-model solo tuning (Phases 0-1)
   mega tune           Per-model solo optimization (same as mega quick)
   mega tournament     Head-to-head model tournament (Phase 2)
   mega ablation       Test each model's contribution, auto-prune bad ones
-  mega models         Show all 31 models with ON/OFF status
+  mega models         Show all 35 models with ON/OFF status
   mega on/off <model> Enable/disable individual models
   mega settings       Show all mega parameter values
   mega set adj=0.10   Set mega parameter (adj, meta, retrain, pn, mn, etc.)

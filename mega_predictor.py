@@ -6,7 +6,7 @@ use the full mega-ensemble for bounded adjustment on top of Elo.
 
 This module bridges the gap between mega_backtest (training) and
 elo_model (live predictions) so that today/predict commands use
-ALL 31 models, not just Elo + XGBoost.
+ALL 35 models, not just Elo + XGBoost.
 """
 
 import os
@@ -285,7 +285,7 @@ class MegaPredictor:
                      self._n_models, meta_type, self._max_adj, elapsed)
 
     def _replay_games(self, csv_file, min_train, retrain_every):
-        """Replay all historical games through the 31 base models."""
+        """Replay all historical games through the 35 base models."""
         games = pd.read_csv(csv_file)
         if "neutral_site" not in games.columns:
             games["neutral_site"] = False
