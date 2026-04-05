@@ -1,41 +1,21 @@
 #!/usr/bin/env python3
 """
-Accuracy-focused optimizer for all sports.
+Accuracy-focused optimizer for MLB.
 Maximizes binary prediction accuracy (not calibration).
 
-Usage: python accuracy_optimize.py <sport_dir>
-  e.g.: python accuracy_optimize.py NBAClaude
+Usage: python accuracy_optimize.py
 """
 import sys, os, time
 import numpy as np
 from scipy.optimize import differential_evolution
 
-if len(sys.argv) < 2:
-    print("Usage: python accuracy_optimize.py <sport_dir>")
-    print("  sport_dir: NBAClaude, NFLClaude, MLBClaude, NHLClaude")
-    sys.exit(1)
-
-sport_dir = sys.argv[1]
-sport_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), sport_dir)
-os.chdir(sport_path)
-sys.path.insert(0, sport_path)
-
 from config import GAMES_FILE, load_elo_settings, save_elo_settings
 from data_players import load_player_stats, build_league_player_scores
 from build_model import _calc_altitude_bonus
-
-# Import the sport-specific Elo class
-sport_prefix = sport_dir.replace("Claude", "")
-if sport_prefix == "NBA":
-    from elo_model import NBAElo as EloClass
-elif sport_prefix == "NFL":
-    from elo_model import NFLElo as EloClass
-elif sport_prefix == "MLB":
-    from elo_model import MLBElo as EloClass
-elif sport_prefix == "NHL":
-    from elo_model import NHLElo as EloClass
-
+from elo_model import MLBElo as EloClass
 from backtest import backtest_model
+
+sport_prefix = "MLB"
 
 # Load prerequisites
 settings = load_elo_settings()
@@ -50,55 +30,17 @@ _ELO_KEYS = {"base_rating", "k", "home_adv", "use_mov", "player_boost",
              "rest_factor", "form_weight", "travel_factor", "sos_factor",
              "playoff_hca_factor", "pace_factor"}
 
-# Sport-specific bounds (tighter around known-good defaults)
-SPORT_BOUNDS = {
-    "NBA": [
-        (5, 15),     # K
-        (15, 50),    # HomeAdv
-        (10, 50),    # PlayerBoost
-        (5, 35),     # RestFactor
-        (10, 50),    # TravelFactor
-        (0, 50),     # PaceFactor
-        (0.3, 0.8),  # PlayoffHCA
-        (0, 30),     # SOSFactor
-        (0, 30),     # FormWeight
-    ],
-    "NFL": [
-        (12, 35),    # K
-        (25, 70),    # HomeAdv
-        (10, 45),    # PlayerBoost
-        (15, 55),    # RestFactor
-        (0, 35),     # TravelFactor
-        (0, 30),     # PaceFactor
-        (0.4, 0.9),  # PlayoffHCA
-        (5, 35),     # SOSFactor
-        (0, 30),     # FormWeight
-    ],
-    "MLB": [
-        (2, 12),     # K
-        (10, 45),    # HomeAdv
-        (5, 35),     # PlayerBoost
-        (2, 25),     # RestFactor
-        (0, 30),     # TravelFactor
-        (0, 35),     # PaceFactor
-        (0.3, 0.9),  # PlayoffHCA
-        (0, 25),     # SOSFactor
-        (0, 25),     # FormWeight
-    ],
-    "NHL": [
-        (4, 18),     # K
-        (10, 50),    # HomeAdv
-        (8, 40),     # PlayerBoost
-        (5, 35),     # RestFactor
-        (5, 40),     # TravelFactor
-        (5, 40),     # PaceFactor
-        (0.3, 0.8),  # PlayoffHCA
-        (0, 30),     # SOSFactor
-        (0, 25),     # FormWeight
-    ],
-}
-
-bounds = SPORT_BOUNDS[sport_prefix]
+bounds = [
+    (2, 12),     # K
+    (10, 45),    # HomeAdv
+    (5, 35),     # PlayerBoost
+    (2, 25),     # RestFactor
+    (0, 30),     # TravelFactor
+    (0, 35),     # PaceFactor
+    (0.3, 0.9),  # PlayoffHCA
+    (0, 25),     # SOSFactor
+    (0, 25),     # FormWeight
+]
 PARAM_NAMES = ["k", "home_adv", "player_boost", "rest_factor",
                "travel_factor", "pace_factor", "playoff_hca_factor",
                "sos_factor", "form_weight"]

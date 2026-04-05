@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-MLB game prediction system combining Elo ratings with a 31-model mega-ensemble, with Predicts $1 contract trading ledger. Interactive CLI app -- no web server, no test framework, no build system.
+MLB game prediction system combining Elo ratings with a 35-model mega-ensemble, with Predicts $1 contract trading ledger. Interactive CLI app -- no web server, no test framework, no build system.
 
 ## Running
 
@@ -20,7 +20,7 @@ First run auto-downloads game data (MLB Stats API), player stats, pitching stats
 **Three-stage prediction pipeline:**
 1. **Elo model** (`elo_model.py` -> `MLBElo` class) -- base team ratings adjusted for home field, park factors, altitude, player strength, starting pitcher quality (K_PITCHER=6), rest days, travel fatigue, series adaptation, interleague factor, bullpen factor, opponent pitcher factor, injuries, and strength of schedule
 2. **XGBoost ensemble** (`enhanced_model.py`) -- 80% Elo / 20% XGBoost (default `elo_weight=0.8`) using 31 rolling features per team (15-game window via `TeamTracker`, includes Pythagorean win expectation, streaks, consistency, and trend)
-3. **Mega-ensemble** (`mega_predictor.py` + `mega_backtest.py`) -- 31 base models stacked via a meta-learner (XGBoost, ridge, or logistic). Produces a bounded adjustment (+/- max_adj, default 0.08) on top of the Elo+XGBoost probability. Models span 7 tiers: Core (Elo, XGBoost), Proven (HMM, Kalman, PageRank, LightGBM, CatBoost, MLP, LSTM), Exotic (GARCH, Fourier/Wavelet, Survival, Copula), Info/Physics (Shannon Entropy, Momentum, Markov Chain, Clustering, Game Theory), Classical Ratings (Poisson/Dixon-Coles, Glicko-2, Bradley-Terry, Monte Carlo, Random Forest), Sports-Specific (SRS, Colley Matrix, Log5, PythagenPat, Exponential Smoothing, Mean Reversion), and Data Enrichment (Weather, Odds).
+3. **Mega-ensemble** (`mega_predictor.py` + `mega_backtest.py`) -- 35 base models stacked via a meta-learner (XGBoost, ridge, or logistic). Produces a bounded adjustment (+/- max_adj, default 0.08) on top of the Elo+XGBoost probability. Models span 7 tiers: Core (Elo, XGBoost), Proven (HMM, Kalman, PageRank, LightGBM, CatBoost, MLP, LSTM), Exotic (GARCH, Fourier/Wavelet, Survival, Copula), Info/Physics (Shannon Entropy, Momentum, Markov Chain, Clustering, Game Theory), Classical Ratings (Poisson/Dixon-Coles, Glicko-2, Bradley-Terry, Monte Carlo, Random Forest), Sports-Specific (SRS, Colley Matrix, Log5, PythagenPat, Exponential Smoothing, Mean Reversion), Additional (SVM, Fibonacci, EVT, Benford), and Data Enrichment (Weather, Odds).
 4. **Platt calibration** (`platt.py`) -- logistic regression on raw probabilities for well-calibrated outputs
 
 **Data flow:**
@@ -32,9 +32,9 @@ First run auto-downloads game data (MLB Stats API), player stats, pitching stats
 - `advanced_stats.py` -> Statcast/FanGraphs via pybaseball (xwOBA, barrel rate, xERA)
 - `build_model.py` -> constructs `MLBElo` from settings + game CSV, applies season regression, sets player/pitcher scores
 - `backtest.py` -> walk-forward backtest, also houses grid search, genetic (`scipy.optimize.differential_evolution`), and Bayesian (GP + EI) optimizers
-- `mega_backtest.py` -> walk-forward backtest for all 31 models with meta-learner training
+- `mega_backtest.py` -> walk-forward backtest for all 35 models with meta-learner training
 - `mega_optimizer.py` -> 7-phase per-model optimization (solo tuning, tournament, ablation, DE fine-tuning, validation)
-- `mega_predictor.py` -> live predictions using all 31 models (replays history, loads trained meta-learner)
+- `mega_predictor.py` -> live predictions using all 35 models (replays history, loads trained meta-learner)
 - `main.py` -> CLI entry point, `dispatch()` routes all commands, team name input triggers prediction flow
 
 **State files (all gitignored, generated at runtime):**
@@ -88,13 +88,13 @@ First run auto-downloads game data (MLB Stats API), player stats, pitching stats
    - SHAP feature importance via XGBoost native `pred_contribs`
 
 4. **Mega-Ensemble** (`mega_backtest.py`, `mega_predictor.py`, `mega_config.py`, `mega_optimizer.py`, `meta_learner.py`)
-   - 31 base models across 7 tiers (see MODEL_REGISTRY in `mega_config.py`)
+   - 35 base models across 7 tiers (see MODEL_REGISTRY in `mega_config.py`)
    - Walk-forward backtest: first 300 games Elo-only, retrain every 80 games (MLB defaults)
    - Meta-learner stacking: XGBoost (default), ridge, or logistic regression
    - Bounded probability adjustment: meta prediction clamped to +/- max_adj (default 0.08)
    - Per-model on/off switches saved to `mlb_mega_settings.json`
    - Per-model hyperparameter tuning via 7-phase optimizer
-   - Live predictions via `MegaPredictor` class (replays all history through 31 models at startup)
+   - Live predictions via `MegaPredictor` class (replays all history through 35 models at startup)
 
 5. **Calibration** (`platt.py`)
    - Platt scaling: logistic regression on logit(raw_prob)
@@ -144,10 +144,10 @@ First run auto-downloads game data (MLB Stats API), player stats, pitching stats
 | `single_param_opt.py` | Coordinate descent optimizer (one param at a time) |
 | `cache_utils.py` | Season-aware smart caching for all API data |
 
-### Mega-Ensemble (31 models)
+### Mega-Ensemble (35 models)
 | File | Purpose |
 |------|---------|
-| `mega_predictor.py` | `MegaPredictor` class: live predictions using all 31 models |
+| `mega_predictor.py` | `MegaPredictor` class: live predictions using all 35 models |
 | `mega_backtest.py` | Walk-forward backtest for full mega-ensemble + meta-learner training |
 | `mega_optimizer.py` | 7-phase per-model optimizer (solo, tournament, ablation, DE, validation) |
 | `mega_config.py` | Model registry, on/off switches, per-model hyperparams, `mega set` handler |
@@ -176,6 +176,10 @@ First run auto-downloads game data (MLB Stats API), player stats, pitching stats
 | `bradley_terry_model.py` | Bradley-Terry MLE (paired comparison) |
 | `monte_carlo_model.py` | Monte Carlo simulation (2000 sims default) |
 | `classic_models.py` | SRS, Colley Matrix, Log5, PythagenPat, Exponential Smoothing, Mean Reversion |
+| `svm_model.py` | SVM classifier (RBF kernel + Platt scaling) |
+| `fibonacci_model.py` | Fibonacci retracement (EMA-smoothed support/resistance levels) |
+| `evt_model.py` | Extreme Value Theory (Generalized Pareto tail risk) |
+| `benford_model.py` | Benford's Law (chi-squared scoring anomaly detection) |
 
 ### Data Enrichment
 | File | Purpose |
@@ -205,9 +209,6 @@ First run auto-downloads game data (MLB Stats API), player stats, pitching stats
 | `run_enhanced_all.py` | Run enhanced backtest standalone |
 | `quick_optimizer.py` | Quick parameter sweep |
 | `sweep_enhanced.py` | Enhanced parameter sweep |
-| `quick_sweep_new.py` | New quick sweep script |
-| `quick_sweep_k.py` | K-factor sweep |
-| `test_all_improvements.py` | Test all model improvements |
 
 ## Data Files (generated at runtime, all gitignored)
 
@@ -314,7 +315,7 @@ Metrics reported: accuracy (%), log loss, Brier score. Calibration table bins pr
 
 ### Mega-Ensemble Backtest (`mega` command)
 
-`run_mega_backtest()` in `mega_backtest.py` runs all 31 base models through a walk-forward loop:
+`run_mega_backtest()` in `mega_backtest.py` runs all 35 base models through a walk-forward loop:
 - Initializes all enabled models (controlled by `mega_config.py` switches)
 - First 300 games (MLB default): accumulates features from all models without meta-learner
 - After min_train: trains the meta-learner (XGBoost/ridge/logistic) on accumulated features
@@ -411,14 +412,14 @@ Enter a team name to start a prediction. Core commands:
 
 **Analysis**: `shap`, `kelly`
 
-**Mega-Ensemble (31 models)**:
+**Mega-Ensemble (35 models)**:
 - `mega` -- Run mega-ensemble backtest (all enabled models)
 - `mega optimize` -- 7-phase per-model optimization (all phases, takes hours)
 - `mega quick` -- Quick mega optimization (Phases 0-1 only)
 - `mega tune` -- Per-model solo optimization (same as mega quick)
 - `mega tournament` -- Head-to-head model tournament (Phase 2)
 - `mega ablation` -- Test each model's individual contribution, auto-prune weak ones
-- `mega models` -- Show all 31 models with ON/OFF status by tier
+- `mega models` -- Show all 35 models with ON/OFF status by tier
 - `mega on <model>` / `mega off <model>` -- Enable/disable individual models (or `mega on all`)
 - `mega settings` -- Show all mega parameter values
 - `mega set <param>=<value>` -- Set mega parameter (e.g., `mega set max_adj=0.10`, `mega set meta=ridge`, `mega set mc_sims=3000`)
@@ -458,7 +459,7 @@ Enter a team name to start a prediction. Core commands:
 8. **Train ensemble**: run `enhanced` (SHAP auto-runs), then `enhanced decay` to compare
 9. **Calibration**: run `rollingcal` for OOS calibration, `betacal` for asymmetry, `conformal` for coverage
 10. **P&L simulation**: run `kelly` to connect model quality to bankroll trajectory
-11. **Mega-ensemble**: run `mega` to train 31-model stack, then `mega optimize` for full tuning
+11. **Mega-ensemble**: run `mega` to train 35-model stack, then `mega optimize` for full tuning
 12. **Iterate**: adjust individual params with `set k=1.0`, `set home=23.47`, etc. -- always rerun `backtest` after to refit the Platt scaler
 
 ### Position Management
@@ -490,5 +491,5 @@ Predicts contracts are $1 binary options. The ledger tracks:
 - All data sources must be completely free (no paid APIs)
 
 ## Dependencies
-- pandas, numpy, scipy, colorama, xgboost, requests, MLB-StatsAPI, matplotlib
+- pandas, numpy, scipy, colorama, tqdm, xgboost, requests, MLB-StatsAPI, matplotlib
 - Optional: torch (for MLP/LSTM), pybaseball (for Statcast/FanGraphs)

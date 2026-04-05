@@ -18,7 +18,7 @@ from platt import load_platt_scaler, apply_platt
 
 # Park factors: run-scoring multiplier for each team's home park (1.0 = average)
 # Source: FanGraphs 5-year park factors (2020-2024 aggregate)
-# Athletics updated to neutral (1.00) pending Sacramento venue data
+# Athletics relocated to Sacramento for 2025; neutral (1.00) pending venue data
 PARK_FACTORS = {
     "Colorado Rockies": 1.27,       # Coors Field (extreme altitude + thin air)
     "Boston Red Sox": 1.07,         # Fenway Park (Green Monster, short dimensions)
@@ -49,8 +49,7 @@ PARK_FACTORS = {
     "San Francisco Giants": 0.95,   # Oracle Park
     "Seattle Mariners": 0.94,       # T-Mobile Park
     "Miami Marlins": 0.93,          # loanDepot park
-    "Oakland Athletics": 1.00,      # Sacramento (neutral pending data)
-    "Athletics": 1.00,
+    "Athletics": 1.00,              # Short-name fallback
     "Sacramento Athletics": 1.00,   # New venue
 }
 
@@ -65,8 +64,7 @@ TEAM_TIMEZONE = {
     "Los Angeles Angels": -8, "Los Angeles Dodgers": -8,
     "Miami Marlins": -5, "Milwaukee Brewers": -6,
     "Minnesota Twins": -6, "New York Mets": -5,
-    "New York Yankees": -5, "Oakland Athletics": -8,
-    "Athletics": -8, "Sacramento Athletics": -8,
+    "New York Yankees": -5, "Athletics": -8, "Sacramento Athletics": -8,
     "Philadelphia Phillies": -5, "Pittsburgh Pirates": -5,
     "San Diego Padres": -8, "San Francisco Giants": -8,
     "Seattle Mariners": -8, "St. Louis Cardinals": -6,

@@ -19,6 +19,7 @@ import logging
 from itertools import product
 
 import numpy as np
+from tqdm import tqdm
 
 _parent = os.path.dirname(__file__)
 if _parent not in sys.path:
@@ -207,9 +208,12 @@ def _phase1_per_model_solo(csv_file, sport, sport_dir, base_params,
 
     total_models = len(testable_models)
 
-    for model_idx, model_name in enumerate(testable_models):
-        print("\n  [%d/%d] Optimizing: %s" % (model_idx + 1, total_models, model_name.upper()))
-        print("  " + "-" * 50)
+    pbar_models = tqdm(enumerate(testable_models), total=total_models,
+                        desc="  Phase 1: Solo opt", leave=True)
+    for model_idx, model_name in pbar_models:
+        pbar_models.set_postfix_str(model_name.upper())
+        tqdm.write("\n  [%d/%d] Optimizing: %s" % (model_idx + 1, total_models, model_name.upper()))
+        tqdm.write("  " + "-" * 50)
 
         # Enable ONLY elo + this model
         solo_switches = {m: False for m in ALL_MODELS}

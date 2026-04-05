@@ -55,6 +55,16 @@ MODEL_REGISTRY = {
     "exp_smoothing":    {"default": True,  "tier": 5, "desc": "Exponential smoothing (trend tracking)"},
     "mean_reversion":   {"default": True,  "tier": 5, "desc": "Mean reversion (Bollinger bands)"},
 
+    # Tier 1 addition: ML classifier
+    "svm":              {"default": True,  "tier": 1, "desc": "SVM classifier (RBF kernel + Platt scaling)"},
+
+    # Tier 2 additions: Exotic / physics-inspired
+    "fibonacci":        {"default": True,  "tier": 2, "desc": "Fibonacci retracement (support/resistance)"},
+    "evt":              {"default": True,  "tier": 2, "desc": "Extreme Value Theory (tail risk)"},
+
+    # Tier 3 addition: Information & physics
+    "benford":          {"default": True,  "tier": 3, "desc": "Benford's Law (scoring pattern anomaly)"},
+
     # Data enrichment models
     "weather":          {"default": True,  "tier": 6, "desc": "Weather impact (temperature, wind)"},
     "odds":             {"default": False, "tier": 6, "desc": "Market odds / CLV tracking"},
@@ -141,7 +151,7 @@ MEGA_PARAMS = {
     "max_adj":                 {"aliases": ["maxadj", "adj", "adjustment"], "type": "float",
                                 "desc": "Max meta-learner adjustment (+/- probability)"},
     "meta_model":              {"aliases": ["meta", "metalearner", "stacker"], "type": "str",
-                                "desc": "Meta-learner type (ridge, logistic, xgboost)"},
+                                "desc": "Meta-learner type (ridge, logistic, xgboost, bma, confidence_voting)"},
     "retrain_every":           {"aliases": ["retrain", "retrain_interval"], "type": "int",
                                 "desc": "Retrain meta-learner every N games"},
     "min_train":               {"aliases": ["mintrain", "min_games", "warmup"], "type": "int",
@@ -277,6 +287,29 @@ MODEL_HYPERPARAMS = {
     },
     "info_theory": {
         "it_n_bins":               {"type": "int",   "default": 5,    "values": [3, 5, 7, 10]},
+    },
+    "svm": {
+        "svm_C":                   {"type": "float", "default": 1.0,  "values": [0.1, 0.5, 1.0, 5.0, 10.0]},
+        "svm_kernel":              {"type": "str",   "default": "rbf", "values": ["rbf", "linear", "poly"]},
+        "svm_gamma":               {"type": "str",   "default": "scale", "values": ["scale", "auto", "0.01", "0.1"]},
+    },
+    "fibonacci": {
+        "fib_ema_alpha":           {"type": "float", "default": 0.15, "values": [0.05, 0.10, 0.15, 0.20, 0.30]},
+        "fib_swing_window":        {"type": "int",   "default": 10,   "values": [5, 8, 10, 15, 20]},
+    },
+    "benford": {
+        "benford_window":          {"type": "int",   "default": 20,   "values": [10, 15, 20, 30]},
+    },
+    "evt": {
+        "evt_threshold_quantile":  {"type": "float", "default": 0.90, "values": [0.80, 0.85, 0.90, 0.95]},
+        "evt_min_exceedances":     {"type": "int",   "default": 5,    "values": [3, 5, 8, 10]},
+    },
+    "meta_bma": {
+        "bma_decay":               {"type": "float", "default": 0.99, "values": [0.95, 0.97, 0.99, 1.0]},
+    },
+    "meta_cv": {
+        "cv_min_confidence":       {"type": "float", "default": 0.05, "values": [0.0, 0.02, 0.05, 0.10]},
+        "cv_agreement_bonus":      {"type": "float", "default": 1.5,  "values": [1.0, 1.2, 1.5, 2.0]},
     },
 }
 

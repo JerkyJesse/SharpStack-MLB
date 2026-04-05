@@ -45,6 +45,10 @@ from glicko_model import LeagueGlicko
 from bradley_terry_model import BradleyTerryModel
 from monte_carlo_model import LeagueMonteCarlo
 from random_forest_model import RandomForestPredictor
+from svm_model import SVMPredictor
+from fibonacci_model import LeagueFibonacci
+from benford_model import LeagueBenford
+from evt_model import LeagueEVT
 from mega_config import load_model_switches, is_model_enabled
 from mega_backtest import SPORT_DEFAULTS, _rolling_features
 
@@ -202,6 +206,18 @@ class MegaPredictor:
             min_games=defaults["hmm_min_games"],
         ) if _on("monte_carlo") else None
         random_forest = RandomForestPredictor(sport) if _on("random_forest") else None
+        svm_m = SVMPredictor(sport) if _on("svm") else None
+        fibonacci = LeagueFibonacci(min_games=defaults["hmm_min_games"]) if _on("fibonacci") else None
+        evt = LeagueEVT(min_games=defaults["hmm_min_games"]) if _on("evt") else None
+        benford = LeagueBenford(min_games=defaults["hmm_min_games"]) if _on("benford") else None
+        if svm_m:
+            self._models["svm"] = svm_m
+        if fibonacci:
+            self._models["fibonacci"] = fibonacci
+        if evt:
+            self._models["evt"] = evt
+        if benford:
+            self._models["benford"] = benford
         if poisson:
             self._models["poisson"] = poisson
         if glicko:
@@ -426,6 +442,17 @@ class MegaPredictor:
             if model:
                 feature_row.update(model.get_features(home, away))
 
+        # New models: Fibonacci, Benford, EVT
+        fibonacci = self._models.get("fibonacci")
+        if fibonacci:
+            feature_row.update(fibonacci.get_features(home, away))
+        benford = self._models.get("benford")
+        if benford:
+            feature_row.update(benford.get_features(home, away))
+        evt = self._models.get("evt")
+        if evt:
+            feature_row.update(evt.get_features(home, away))
+
         # Rolling team features
         home_rolling = _rolling_features(
             self._team_margins[home], self._team_scores_for[home],
@@ -555,6 +582,20 @@ class MegaPredictor:
             if model:
                 model.add_game(home, away, h_score, a_score)
 
+        # New models
+        fibonacci = self._models.get("fibonacci")
+        if fibonacci:
+            fibonacci.add_game(home, margin)
+            fibonacci.add_game(away, -margin)
+        benford_m = self._models.get("benford")
+        if benford_m:
+            benford_m.add_game(home, h_score, a_score, h_score > a_score)
+            benford_m.add_game(away, a_score, h_score, a_score > h_score)
+        evt = self._models.get("evt")
+        if evt:
+            evt.add_game(home, margin)
+            evt.add_game(away, -margin)
+
         # Rolling team tracking
         self._team_margins[home].append(margin)
         self._team_margins[away].append(-margin)
@@ -573,7 +614,7 @@ class MegaPredictor:
             y = np.array(all_labels, dtype=np.float32)
             X = np.nan_to_num(X, nan=0.0, posinf=1.0, neginf=-1.0)
 
-            for name in ("lightgbm", "catboost", "mlp", "random_forest"):
+            for name in ("lightgbm", "catboost", "mlp", "random_forest", "svm"):
                 model = self._models.get(name)
                 if model:
                     try:

@@ -10,6 +10,7 @@ from datetime import timedelta
 import numpy as np
 import pandas as pd
 import xgboost as xgb
+from tqdm import tqdm
 
 from config import GAMES_FILE, load_elo_settings
 from elo_model import MLBElo
@@ -545,7 +546,8 @@ def run_enhanced_backtest(csv_file=GAMES_FILE, min_train=200, retrain_every=50,
     xgb_predictions = 0
     prev_season = None
 
-    for idx, row in games.iterrows():
+    for idx, row in tqdm(games.iterrows(), total=len(games),
+                         desc="  Enhanced backtest", leave=True):
         game_date = row["_date_parsed"] if pd.notna(row["_date_parsed"]) else None
         home = row["home_team"]
         away = row["away_team"]

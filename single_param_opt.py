@@ -84,11 +84,9 @@ _altitude_bonus = None  # type: dict
 _fg_pitching = None     # type: pd.DataFrame  (FanGraphs FIP/xFIP data)
 
 
-def _preload_data():
+def _preload_data(csv_file=GAMES_FILE):
     """Load games CSV and player stats once."""
     global _games_df, _player_df, _adv_df, _altitude_bonus, _fg_pitching
-
-    csv_file = GAMES_FILE
     print("Loading game data from", csv_file, "...")
     _games_df = pd.read_csv(csv_file)
     if "neutral_site" not in _games_df.columns:
@@ -265,7 +263,7 @@ def _fine_sweep(param, settings, coarse_best_val, current_best_acc):
     return best_val, best_acc
 
 
-def optimize():
+def run_coordinate_descent(csv_file=GAMES_FILE):
     """Run coordinate descent optimization."""
     print("=" * 65)
     print("  MLB Elo -- Coordinate Descent Parameter Optimizer")
@@ -273,7 +271,7 @@ def optimize():
     print()
 
     # Pre-load all data
-    _preload_data()
+    _preload_data(csv_file)
     print()
 
     # Load current settings

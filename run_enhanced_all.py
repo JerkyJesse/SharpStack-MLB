@@ -1,26 +1,16 @@
 #!/usr/bin/env python3
 """
-Run enhanced (XGBoost) backtest on all 4 sports with multiple elo_weights.
-Finds the best elo_weight for each sport.
+Run enhanced (XGBoost) backtest with multiple elo_weights.
+Finds the best elo_weight for MLB.
 
-Usage: python run_enhanced_all.py <sport_dir>
-  e.g.: python run_enhanced_all.py MLBClaude
+Usage: python run_enhanced_all.py
 """
 import sys, os, time
-
-if len(sys.argv) < 2:
-    print("Usage: python run_enhanced_all.py <sport_dir>")
-    sys.exit(1)
-
-sport_dir = sys.argv[1]
-sport_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), sport_dir)
-os.chdir(sport_path)
-sys.path.insert(0, sport_path)
 
 from config import GAMES_FILE
 from enhanced_model import run_enhanced_backtest
 
-sport_prefix = sport_dir.replace("Claude", "")
+sport_prefix = "MLB"
 
 # Test multiple elo_weights to find the best for this sport
 weights_to_test = [0.8, 0.7, 0.6, 0.5, 0.4, 0.3]

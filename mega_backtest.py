@@ -19,6 +19,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np
 import pandas as pd
+from tqdm import tqdm
 
 # Import all base models from parent directory
 
@@ -42,6 +43,10 @@ from glicko_model import LeagueGlicko
 from bradley_terry_model import BradleyTerryModel
 from monte_carlo_model import LeagueMonteCarlo
 from random_forest_model import RandomForestPredictor
+from svm_model import SVMPredictor
+from fibonacci_model import LeagueFibonacci
+from benford_model import LeagueBenford
+from evt_model import LeagueEVT
 from mega_config import load_model_switches, is_model_enabled, get_default_switches
 
 # Try importing classic models (Tier 5)
@@ -314,6 +319,18 @@ def run_mega_backtest(csv_file, sport="nfl", elo_model_class=None,
     ) if _on("monte_carlo") else None
     _hp = model_params.get("random_forest", {})
     random_forest = RandomForestPredictor(sport, **_hp) if _on("random_forest") else None
+    _hp = model_params.get("svm", {})
+    svm_m = SVMPredictor(sport, **_hp) if _on("svm") else None
+
+    # Fibonacci, EVT (Tier 2 additions)
+    _hp = model_params.get("fibonacci", {})
+    fibonacci = LeagueFibonacci(min_games=defaults["hmm_min_games"], **_hp) if _on("fibonacci") else None
+    _hp = model_params.get("evt", {})
+    evt = LeagueEVT(min_games=defaults["hmm_min_games"], **_hp) if _on("evt") else None
+
+    # Benford (Tier 3 addition)
+    benford = LeagueBenford(min_games=defaults["hmm_min_games"],
+                            **model_params.get("benford", {})) if _on("benford") else None
 
     # 10. Tier 5: Classic models
     srs = None; colley = None; log5 = None
@@ -367,7 +384,8 @@ def run_mega_backtest(csv_file, sport="nfl", elo_model_class=None,
 
     start_time = time.time()
 
-    for game_idx, row in games.iterrows():
+    for game_idx, row in tqdm(games.iterrows(), total=len(games),
+                              desc="  Mega backtest", leave=True):
         game_date = row["_date_parsed"] if pd.notna(row["_date_parsed"]) else None
         home = row["home_team"]
         away = row["away_team"]
@@ -481,6 +499,14 @@ def run_mega_backtest(csv_file, sport="nfl", elo_model_class=None,
         if mean_revert:
             feature_row.update(mean_revert.get_features(home, away))
 
+        # New models: Fibonacci, Benford, EVT
+        if fibonacci:
+            feature_row.update(fibonacci.get_features(home, away))
+        if benford:
+            feature_row.update(benford.get_features(home, away))
+        if evt:
+            feature_row.update(evt.get_features(home, away))
+
         # 19. Data enrichment: Odds
         if odds_data and _on("odds"):
             game_odds = find_game_odds(odds_data, home, away)
@@ -585,6 +611,8 @@ def run_mega_backtest(csv_file, sport="nfl", elo_model_class=None,
                 trainable.append((catboost_m, "CatBoost"))
             if random_forest:
                 trainable.append((random_forest, "RandomForest"))
+            if svm_m:
+                trainable.append((svm_m, "SVM"))
             if mlp and HAS_TORCH:
                 trainable.append((mlp, "MLP"))
 
@@ -618,29 +646,40 @@ def run_mega_backtest(csv_file, sport="nfl", elo_model_class=None,
                         _mlp_oof.train(X[:split], y[:split], feat_names)
                         oof_mlp = _mlp_oof.predict_proba(X[split:])
 
+                    oof_svm = np.full(len(X) - split, 0.5)
+                    if svm_m:
+                        _svm_oof = SVMPredictor(sport)
+                        _svm_oof.train(X[:split], y[:split], feat_names)
+                        oof_svm = _svm_oof.predict_proba(X[split:])
+
                     # Only set OOF predictions for the test portion
                     for i in range(split, len(all_features)):
                         oof_idx = i - split
                         all_features[i]["lgbm_prob"] = float(oof_lgbm[oof_idx])
                         all_features[i]["catboost_prob"] = float(oof_cat[oof_idx])
                         all_features[i]["mlp_prob"] = float(oof_mlp[oof_idx])
+                        all_features[i]["svm_prob"] = float(oof_svm[oof_idx])
 
                     # For train portion, use in-sample (will be regularized by meta-learner)
                     train_lgbm = lgbm.predict_proba(X[:split])
                     train_cat = catboost_m.predict_proba(X[:split])
                     train_mlp = mlp.predict_proba(X[:split]) if (mlp and mlp._fitted) else np.full(split, 0.5)
+                    train_svm = svm_m.predict_proba(X[:split]) if (svm_m and svm_m._fitted) else np.full(split, 0.5)
                     for i in range(split):
                         all_features[i]["lgbm_prob"] = float(train_lgbm[i])
                         all_features[i]["catboost_prob"] = float(train_cat[i])
                         all_features[i]["mlp_prob"] = float(train_mlp[i])
+                        all_features[i]["svm_prob"] = float(train_svm[i])
                 except Exception as e:
                     logging.debug("OOF prediction failed, using in-sample: %s", e)
                     lgbm_preds = lgbm.predict_proba(X) if lgbm and lgbm._fitted else np.full(len(X), 0.5)
                     cat_preds = catboost_m.predict_proba(X) if catboost_m and catboost_m._fitted else np.full(len(X), 0.5)
+                    svm_preds = svm_m.predict_proba(X) if svm_m and svm_m._fitted else np.full(len(X), 0.5)
                     for i in range(len(all_features)):
                         all_features[i]["lgbm_prob"] = float(lgbm_preds[i])
                         all_features[i]["catboost_prob"] = float(cat_preds[i])
                         all_features[i]["mlp_prob"] = 0.5
+                        all_features[i]["svm_prob"] = float(svm_preds[i])
 
             # Rebuild augmented feature matrix
             feat_names_aug = sorted(set().union(*[f.keys() for f in all_features]))
@@ -659,11 +698,7 @@ def run_mega_backtest(csv_file, sport="nfl", elo_model_class=None,
             except Exception as e:
                 logging.debug("Meta-learner training failed: %s", e)
 
-            if verbose and game_num % (retrain_every * 3) == 0:
-                elapsed = time.time() - start_time
-                print(f"  Game {game_num}/{len(games)}: "
-                      f"{len(predictions)} predictions, "
-                      f"elapsed {elapsed:.0f}s")
+            pass  # Progress tracked by tqdm bar
 
         # ── Update all models with game result ────────────────────
 
@@ -719,6 +754,17 @@ def run_mega_backtest(csv_file, sport="nfl", elo_model_class=None,
             monte_carlo.add_game(home, h_score, a_score, is_home=True)
             monte_carlo.add_game(away, a_score, h_score, is_home=False)
 
+        # New model updates
+        if fibonacci:
+            fibonacci.add_game(home, margin)
+            fibonacci.add_game(away, -margin)
+        if benford:
+            benford.add_game(home, h_score, a_score, h_score > a_score)
+            benford.add_game(away, a_score, h_score, a_score > h_score)
+        if evt:
+            evt.add_game(home, margin)
+            evt.add_game(away, -margin)
+
         # Classic model updates (all use same API: home, away, h_score, a_score)
         if srs:
             srs.add_game(home, away, h_score, a_score)
@@ -737,6 +783,8 @@ def run_mega_backtest(csv_file, sport="nfl", elo_model_class=None,
         if game_idx > 0 and game_idx % 50 == 0:
             if volatility:
                 volatility.fit_all()
+            if evt:
+                evt.fit_all()
             if clustering:
                 clustering.fit()
             if poisson:
@@ -847,6 +895,14 @@ def run_mega_backtest(csv_file, sport="nfl", elo_model_class=None,
         results["models_used"].append("monte_carlo")
     if random_forest and random_forest._fitted:
         results["models_used"].append("random_forest")
+    if svm_m and svm_m._fitted:
+        results["models_used"].append("svm")
+    if fibonacci and fibonacci.teams:
+        results["models_used"].append("fibonacci")
+    if benford and benford.teams:
+        results["models_used"].append("benford")
+    if evt and evt.teams:
+        results["models_used"].append("evt")
     if srs:
         results["models_used"].append("srs")
     if colley:

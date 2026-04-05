@@ -1,8 +1,8 @@
-# MLB Moneyball -- 31-Model Mega-Ensemble
+# MLB Moneyball -- 35-Model Mega-Ensemble
 
-A production-grade MLB game prediction system that fuses 31 independent models -- spanning Elo ratings, gradient boosting, Hidden Markov Models, Kalman filters, PageRank, neural networks, survival analysis, information theory, game theory, and classical baseball sabermetrics -- into a single calibrated probability through a walk-forward meta-learner. Every model trains on real MLB data pulled from completely free APIs (MLB Stats API, ESPN injuries, Open-Meteo weather). The system includes a full Predicts $1 binary contract trading ledger with Kelly criterion position sizing, live score tracking, auto-settlement, and monthly P&L charting. All 162-game-season parameters are tuned through a 7-phase exhaustive optimizer with multithreaded backtesting and optional GPU acceleration.
+A production-grade MLB game prediction system that fuses 35 independent models -- spanning Elo ratings, gradient boosting, Hidden Markov Models, Kalman filters, PageRank, neural networks, survival analysis, information theory, game theory, and classical baseball sabermetrics -- into a single calibrated probability through a walk-forward meta-learner. Every model trains on real MLB data pulled from completely free APIs (MLB Stats API, ESPN injuries, Open-Meteo weather). The system includes a full Predicts $1 binary contract trading ledger with Kelly criterion position sizing, live score tracking, auto-settlement, and monthly P&L charting. All 162-game-season parameters are tuned through a 7-phase exhaustive optimizer with multithreaded backtesting and optional GPU acceleration.
 
-**30 MLB teams** | **31 models** | **86+ tunable parameters** (32 Elo + 54 per-model) | **7-phase per-model optimizer** | **No paid APIs**
+**30 MLB teams** | **35 models** | **90+ tunable parameters** (32 Elo + 58 per-model) | **7-phase per-model optimizer** | **No paid APIs**
 
 ---
 
@@ -10,7 +10,8 @@ A production-grade MLB game prediction system that fuses 31 independent models -
 
 ```bash
 # 1. Clone and enter directory
-cd MLBClaude
+git clone https://github.com/JerkyJesse/SharpStack-MLB.git
+cd SharpStack-MLB
 
 # 2. Install dependencies
 pip install -r requirements.txt
@@ -30,7 +31,7 @@ python main.py
 3. Baseline backtest runs automatically (fits Platt calibration scaler)
 4. Enter starting balance when prompted (for contract tracking)
 5. Type a team name (e.g. "Yankees") to make your first prediction
-6. Run 'mega' for the full 31-model ensemble backtest
+6. Run 'mega' for the full 35-model ensemble backtest
 7. Run 'mega tune' to solo-test each model's optimal settings
 8. Run 'mega optimize' for full 7-phase per-model optimization
 ```
@@ -39,7 +40,7 @@ On startup, the system downloads and caches all required data, builds the Elo mo
 
 ---
 
-## The 31 Models
+## The 35 Models
 
 Every model runs independently on the same game-by-game walk-forward loop. Their raw outputs feed into the meta-learner, which produces a single calibrated adjustment bounded by `max_adj`.
 
@@ -109,6 +110,15 @@ Every model runs independently on the same game-by-game walk-forward loop. Their
 | 30 | **Weather** | -- | Environmental impact | Temperature, wind speed, humidity, precipitation probability from Open-Meteo API (free, no key). Adjusts predictions for extreme weather at outdoor ballparks. |
 | 31 | **Odds** | -- | Market consensus | Ingests moneyline odds from The Odds API. Closing Line Value (CLV) tracking. Markets are efficient -- odds provide a strong independent signal. Off by default (requires free API key). |
 
+### Tier 7 -- Novel / Experimental
+
+| # | Model | Year | Method | Description |
+|---|-------|------|--------|-------------|
+| 32 | **SVM** | 2026 | Support Vector Machine | RBF kernel with Platt scaling, maximum-margin classifier |
+| 33 | **Fibonacci** | 2026 | Fibonacci Retracement | EMA-smoothed performance swings with support/resistance levels |
+| 34 | **EVT** | 2026 | Extreme Value Theory | Generalized Pareto distribution for tail risk analysis |
+| 35 | **Benford** | 2026 | Benford's Law | Chi-squared scoring pattern anomaly detection |
+
 ---
 
 ## Architecture
@@ -145,7 +155,7 @@ Every model runs independently on the same game-by-game walk-forward loop. Their
                      | Elo probability (anchor)
                      |
     +=====================================+
-    |    31 BASE MODEL PREDICTIONS        |
+    |    35 BASE MODEL PREDICTIONS        |
     |                                     |
     |  [Tier 0] Elo, XGBoost             |
     |  [Tier 1] HMM, Kalman, PageRank,   |
@@ -167,7 +177,7 @@ Every model runs independently on the same game-by-game walk-forward loop. Their
     |  ThreadPoolExecutor                 |
     +=====================================+
                      |
-                     | Vector of 31 probabilities
+                     | Vector of 35 probabilities
                      v
     +=====================================+
     |       META-LEARNER (Stacker)        |
@@ -313,10 +323,10 @@ Every parameter in this system was chosen with the specific structure of Major L
 | `mega tournament` | Head-to-head model tournament (Phase 2 only) | ~15-30m |
 | `mega quick` | Quick grid search only (Phase 1) | ~20-40m |
 | `mega ablation` | Ablation study: test each model's individual contribution | ~30-60m |
-| `mega models` | Show all 31 models with ON/OFF status and tier | instant |
+| `mega models` | Show all 35 models with ON/OFF status and tier | instant |
 | `mega on <model>` | Enable a specific model (e.g., `mega on lstm`) | instant |
 | `mega off <model>` | Disable a specific model (e.g., `mega off weather`) | instant |
-| `mega on all` | Enable all 31 models | instant |
+| `mega on all` | Enable all 35 models | instant |
 | `mega settings` | Show all mega parameter current values | instant |
 | `mega set <param>=<value>` | Set a mega parameter (e.g., `mega set adj=0.10`) | instant |
 
@@ -596,7 +606,7 @@ MLB plays games every single day during the regular season (April-September), wi
 ## File Structure
 
 ```
-MLBClaude/
+MLB/
 |
 |-- main.py                     # CLI entry point, command dispatch loop
 |-- config.py                   # Constants, 30 MLB teams, 6 divisions, settings I/O
@@ -645,6 +655,10 @@ MLBClaude/
 |-- monte_carlo_model.py        # Monte Carlo simulation (2000+ sims)
 |-- random_forest_model.py      # Random Forest (bagging diversity)
 |-- classic_models.py           # SRS, Colley, Log5, PythagenPat, ExpSmooth, MeanReversion
+|-- svm_model.py                # SVM classifier (RBF kernel + Platt scaling)
+|-- fibonacci_model.py          # Fibonacci retracement analysis
+|-- evt_model.py                # Extreme Value Theory tail risk
+|-- benford_model.py            # Benford's Law anomaly detection
 |
 |-- odds_tracker.py             # The Odds API integration + CLV tracking
 |-- weather.py                  # Open-Meteo weather impact calculation
@@ -653,18 +667,15 @@ MLBClaude/
 |-- meta_learner.py             # Ridge/Logistic/XGBoost meta-learner stacker
 |-- mega_backtest.py            # Mega-ensemble walk-forward backtest engine
 |-- mega_optimizer.py           # 7-phase mega-ensemble optimization
-|-- mega_predictor.py           # MegaPredictor class (31-model runner)
+|-- mega_predictor.py           # MegaPredictor class (35-model runner)
 |-- mega_config.py              # Per-model on/off switches + mega params + hyperparams
 |
 |-- run_optimize.py             # Optimization runner script
 |-- quick_optimizer.py          # Quick optimization utilities
 |-- run_enhanced_all.py         # Batch enhanced model runner
 |-- sweep_enhanced.py           # Enhanced parameter sweep
-|-- quick_sweep_k.py            # Quick K-factor sweep
-|-- quick_sweep_new.py          # Quick parameter sweep (new params)
 |-- accuracy_optimize.py        # Accuracy-focused optimization utilities
 |-- accuracy_test.py            # Quick walk-forward accuracy test
-|-- test_all_improvements.py    # Integration test suite
 |
 |-- requirements.txt            # Python dependencies
 |-- CLAUDE.md                   # Claude Code context file
@@ -726,7 +737,7 @@ MLBClaude/
 
 Use `mega tune` for per-model solo optimization (Phase 1 only) and `mega tournament` for head-to-head model comparison (Phase 2 only).
 
-**Mega ablation** (`mega ablation`): Disables each model one at a time and measures the accuracy change. Models that hurt overall accuracy are automatically flagged for pruning. This identifies which of the 31 models are contributing positive signal and which are adding noise.
+**Mega ablation** (`mega ablation`): Disables each model one at a time and measures the accuracy change. Models that hurt overall accuracy are automatically flagged for pruning. This identifies which of the 35 models are contributing positive signal and which are adding noise.
 
 ### Recommended Optimization Workflow
 
@@ -984,6 +995,7 @@ pandas>=1.5
 numpy>=1.24
 scipy>=1.10
 colorama>=0.4
+tqdm>=4.60
 xgboost>=2.0
 requests>=2.28
 matplotlib>=3.7

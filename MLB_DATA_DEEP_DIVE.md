@@ -1,5 +1,5 @@
 # MLB Data Sources Deep Dive -- Prediction Accuracy Improvement Guide
-# For MLBClaude Prediction System
+# For MLB Prediction System
 # Last updated: 2026-03-29
 
 This document goes deeper than FREE_DATA_SOURCES.md on MLB-specific data sources,

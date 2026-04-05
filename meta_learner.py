@@ -79,6 +79,10 @@ class MetaLearner:
             self._train_logistic(X, y)
         elif self.meta_model_type == "ridge":
             self._train_ridge(X, y)
+        elif self.meta_model_type == "bma":
+            self._train_bma(X, y)
+        elif self.meta_model_type == "confidence_voting":
+            self._train_confidence_voting(X, y)
         else:
             self._train_xgboost(X, y)
 
@@ -113,7 +117,7 @@ class MetaLearner:
         total = sum(imp.values()) if imp else 1
         self._feature_importance = {k: v / total for k, v in imp.items()}
         self._fitted = True
-        logging.info("Meta-learner (XGBoost) trained: %d features, %d samples", X.shape[1], len(y))
+        logging.debug("Meta-learner (XGBoost) trained: %d features, %d samples", X.shape[1], len(y))
 
     def _train_logistic(self, X, y):
         """Train logistic regression meta-learner (simpler, less overfitting risk)."""
@@ -144,7 +148,7 @@ class MetaLearner:
         abs_w = np.abs(self._logistic_weights)
         total = abs_w.sum() if abs_w.sum() > 0 else 1
         self._feature_importance = {f: w / total for f, w in zip(self.feature_names, abs_w)}
-        logging.info("Meta-learner (Logistic) trained: %d features", n_features)
+        logging.debug("Meta-learner (Logistic) trained: %d features", n_features)
 
     def _train_ridge(self, X, y):
         """Train ridge regression meta-learner with standardization."""
@@ -175,7 +179,106 @@ class MetaLearner:
         abs_w = np.abs(self._ridge_weights[:-1])
         total = abs_w.sum() if abs_w.sum() > 0 else 1
         self._feature_importance = {f: w / total for f, w in zip(self.feature_names, abs_w)}
-        logging.info("Meta-learner (Ridge) trained: %d features, alpha=%.1f", p, alpha)
+        logging.debug("Meta-learner (Ridge) trained: %d features, alpha=%.1f", p, alpha)
+
+    def _train_bma(self, X, y):
+        """Train Bayesian Model Averaging meta-learner.
+
+        Weights each base model by its posterior probability based on
+        rolling log-likelihood of its predictions.
+        """
+        n, p = X.shape
+        decay = self.model_params.get("bma_decay", 0.99)
+
+        # Identify probability columns (features ending in _prob)
+        self._bma_prob_cols = [i for i, f in enumerate(self.feature_names)
+                               if f.endswith("_prob")]
+
+        if not self._bma_prob_cols:
+            # Fallback: treat all features as probability-like
+            self._bma_prob_cols = list(range(p))
+
+        # Compute weighted log-likelihood for each probability column
+        log_likelihoods = {}
+        for col_idx in self._bma_prob_cols:
+            preds = np.clip(X[:, col_idx], 1e-7, 1 - 1e-7)
+            # Weighted log-likelihood with exponential decay (recent games matter more)
+            weights = np.array([decay ** (n - 1 - i) for i in range(n)])
+            weights /= weights.sum()
+            ll = np.sum(weights * (y * np.log(preds) + (1 - y) * np.log(1 - preds)))
+            log_likelihoods[col_idx] = ll
+
+        # Convert to posterior weights via log-sum-exp (numerical stability)
+        ll_values = np.array([log_likelihoods[i] for i in self._bma_prob_cols])
+        max_ll = np.max(ll_values)
+        exp_ll = np.exp(ll_values - max_ll)
+
+        # Minimum weight floor to prevent collapse to single model
+        n_models = len(self._bma_prob_cols)
+        min_weight = 0.01 / n_models if n_models > 0 else 0.01
+        exp_ll = np.maximum(exp_ll, min_weight)
+
+        posterior = exp_ll / exp_ll.sum()
+
+        self._bma_weights = {self._bma_prob_cols[i]: float(posterior[i])
+                             for i in range(len(self._bma_prob_cols))}
+
+        # Feature importance from BMA weights
+        total_w = sum(self._bma_weights.values()) or 1
+        self._feature_importance = {}
+        for col_idx, w in self._bma_weights.items():
+            fname = self.feature_names[col_idx] if col_idx < len(self.feature_names) else f"f{col_idx}"
+            self._feature_importance[fname] = w / total_w
+
+        self._fitted = True
+        logging.debug("Meta-learner (BMA) trained: %d prob columns, decay=%.3f",
+                      len(self._bma_prob_cols), decay)
+
+    def _train_confidence_voting(self, X, y):
+        """Train Confidence Voting meta-learner.
+
+        Each model votes weighted by confidence (distance from 0.5)
+        and historical accuracy.
+        """
+        n, p = X.shape
+        min_confidence = self.model_params.get("cv_min_confidence", 0.05)
+        agreement_bonus = self.model_params.get("cv_agreement_bonus", 1.5)
+
+        # Identify probability columns
+        self._cv_prob_cols = [i for i, f in enumerate(self.feature_names)
+                              if f.endswith("_prob")]
+
+        if not self._cv_prob_cols:
+            self._cv_prob_cols = list(range(p))
+
+        # Compute per-model accuracy
+        self._cv_accuracy_weights = {}
+        for col_idx in self._cv_prob_cols:
+            preds = X[:, col_idx]
+            binary_preds = (preds > 0.5).astype(float)
+            accuracy = np.mean(binary_preds == y) if len(y) > 0 else 0.5
+            # Use relative accuracy (above/below mean) as weight
+            self._cv_accuracy_weights[col_idx] = max(0.1, accuracy)
+
+        # Normalize accuracy weights
+        mean_acc = np.mean(list(self._cv_accuracy_weights.values())) if self._cv_accuracy_weights else 0.5
+        if mean_acc > 0:
+            self._cv_accuracy_weights = {k: v / mean_acc
+                                          for k, v in self._cv_accuracy_weights.items()}
+
+        self._cv_min_confidence = min_confidence
+        self._cv_agreement_bonus = agreement_bonus
+
+        # Feature importance from accuracy weights
+        total_w = sum(self._cv_accuracy_weights.values()) or 1
+        self._feature_importance = {}
+        for col_idx, w in self._cv_accuracy_weights.items():
+            fname = self.feature_names[col_idx] if col_idx < len(self.feature_names) else f"f{col_idx}"
+            self._feature_importance[fname] = w / total_w
+
+        self._fitted = True
+        logging.debug("Meta-learner (ConfidenceVoting) trained: %d prob columns",
+                      len(self._cv_prob_cols))
 
     def predict_proba(self, X):
         """Predict final probabilities."""
@@ -197,6 +300,44 @@ class MetaLearner:
             X_bias = np.column_stack([X_std, np.ones(len(X))])
             raw = X_bias @ self._ridge_weights
             probs = 1.0 / (1.0 + np.exp(-np.clip(raw, -30, 30)))
+        elif self.meta_model_type == "bma":
+            # Bayesian Model Averaging: weighted average of prob columns
+            probs = np.full(len(X), 0.5)
+            if hasattr(self, '_bma_weights') and self._bma_weights:
+                weighted_sum = np.zeros(len(X))
+                weight_total = 0.0
+                for col_idx, w in self._bma_weights.items():
+                    if col_idx < X.shape[1]:
+                        weighted_sum += w * np.clip(X[:, col_idx], 0.01, 0.99)
+                        weight_total += w
+                if weight_total > 0:
+                    probs = weighted_sum / weight_total
+        elif self.meta_model_type == "confidence_voting":
+            # Confidence-weighted voting
+            probs = np.full(len(X), 0.5)
+            if hasattr(self, '_cv_accuracy_weights') and self._cv_accuracy_weights:
+                for row_idx in range(len(X)):
+                    weighted_vote = 0.0
+                    total_weight = 0.0
+                    for col_idx in self._cv_prob_cols:
+                        if col_idx >= X.shape[1]:
+                            continue
+                        p = float(np.clip(X[row_idx, col_idx], 0.01, 0.99))
+                        confidence = abs(p - 0.5) * 2  # 0 = no opinion, 1 = certain
+                        if confidence < self._cv_min_confidence:
+                            continue
+                        acc_w = self._cv_accuracy_weights.get(col_idx, 1.0)
+                        direction = 1.0 if p > 0.5 else -1.0
+                        weighted_vote += acc_w * confidence * direction
+                        total_weight += acc_w * confidence
+
+                    if total_weight > 0:
+                        # Check agreement: if most models agree, apply bonus
+                        raw_score = weighted_vote / total_weight
+                        if abs(raw_score) > 0.6:
+                            raw_score *= self._cv_agreement_bonus
+                            raw_score = max(-1.0, min(1.0, raw_score))
+                        probs[row_idx] = 0.5 + 0.5 * raw_score
         else:
             return np.full(len(X), 0.5)
 
@@ -250,6 +391,14 @@ class MetaLearner:
             meta["bias"] = float(self._logistic_bias)
         elif self.meta_model_type == "ridge":
             meta["weights"] = self._ridge_weights.tolist()
+        elif self.meta_model_type == "bma":
+            meta["bma_weights"] = {str(k): v for k, v in self._bma_weights.items()}
+            meta["bma_prob_cols"] = self._bma_prob_cols
+        elif self.meta_model_type == "confidence_voting":
+            meta["cv_accuracy_weights"] = {str(k): v for k, v in self._cv_accuracy_weights.items()}
+            meta["cv_prob_cols"] = self._cv_prob_cols
+            meta["cv_min_confidence"] = getattr(self, '_cv_min_confidence', 0.05)
+            meta["cv_agreement_bonus"] = getattr(self, '_cv_agreement_bonus', 1.5)
 
         with open(filepath, "w") as f:
             json.dump(meta, f, indent=2)
@@ -284,6 +433,16 @@ class MetaLearner:
         elif self.meta_model_type == "ridge":
             self._ridge_weights = np.array(meta["weights"])
             self._fitted = True
+        elif self.meta_model_type == "bma":
+            self._bma_weights = {int(k): v for k, v in meta.get("bma_weights", {}).items()}
+            self._bma_prob_cols = meta.get("bma_prob_cols", [])
+            self._fitted = bool(self._bma_weights)
+        elif self.meta_model_type == "confidence_voting":
+            self._cv_accuracy_weights = {int(k): v for k, v in meta.get("cv_accuracy_weights", {}).items()}
+            self._cv_prob_cols = meta.get("cv_prob_cols", [])
+            self._cv_min_confidence = meta.get("cv_min_confidence", 0.05)
+            self._cv_agreement_bonus = meta.get("cv_agreement_bonus", 1.5)
+            self._fitted = bool(self._cv_accuracy_weights)
 
         return self._fitted
 

@@ -21,12 +21,12 @@ colorama_init(autoreset=True)
 _USE_UNICODE = False
 try:
     sys.stdout.write("\r")  # harmless write to test the stream
-    "\u2500".encode(sys.stdout.encoding or "ascii")
+    "─".encode(sys.stdout.encoding or "ascii")
     _USE_UNICODE = True
 except Exception:
     _USE_UNICODE = False
 
-_DIV_CHAR = "\u2500" if _USE_UNICODE else "-"
+_DIV_CHAR = "─" if _USE_UNICODE else "-"
 
 
 def _c(text, *codes):

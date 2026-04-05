@@ -150,7 +150,7 @@ class LeagueHMM:
             if hmm.fit(margins, self.team_home.get(team)):
                 self.team_models[team] = hmm
                 fitted += 1
-        logging.info("HMM fitted for %d/%d teams", fitted, len(self.team_margins))
+        logging.debug("HMM fitted for %d/%d teams", fitted, len(self.team_margins))
         return fitted
 
     def get_state(self, team):

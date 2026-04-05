@@ -40,7 +40,7 @@ from help_system import show_help
 from enhanced_model import (run_enhanced_backtest, save_enhanced_model,
                             load_enhanced_model, shap_feature_importance)
 from injuries import show_injury_report, get_team_injuries, calc_injury_impact, manual_set_injuries, fetch_injury_report
-from single_param_opt import optimize as run_coordinate_descent
+from single_param_opt import run_coordinate_descent
 
 # Phase 1: Mega-ensemble data sources
 import sys
@@ -222,7 +222,7 @@ def dispatch(cmd, model, csv_file):
         model = build_model(csv_file)
         model._platt_scaler = load_platt_scaler()
     elif cmd in ("singleopt", "single-opt", "single opt", "coorddescent", "coord"):
-        run_coordinate_descent()
+        run_coordinate_descent(csv_file)
         model = build_model(csv_file)
         model._platt_scaler = load_platt_scaler()
     elif cmd == "injuries":

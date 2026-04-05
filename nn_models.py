@@ -354,7 +354,7 @@ class LSTMPredictor:
                     break
 
         self._fitted = True
-        logging.info("LSTM trained: seq_len=%d, %d features, loss=%.4f",
+        logging.debug("LSTM trained: seq_len=%d, %d features, loss=%.4f",
                      self.seq_len, input_dim, best_loss)
 
     def predict_single(self, home_team, away_team):
