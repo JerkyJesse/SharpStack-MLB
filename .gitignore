@@ -1,0 +1,67 @@
+# ── Runtime state files (generated, not source) ──
+*_elo_ratings.json
+*_elo_settings.json
+*_platt_scaler.json
+*_isotonic_scaler.json
+*_beta_scaler.json
+*_enhanced_model.json
+*_xgb_model.json
+*_meta_learner.json
+*_mega_settings.json
+*_injuries.json
+
+# ── Data files (downloaded at runtime) ──
+*_recent_games.csv
+*_player_stats.csv
+*_advanced_stats.csv
+*_backtest_predictions.csv
+*_calibration.csv
+*_mega_predictions.csv
+*_recent_2seasons.csv
+predicts_lots.csv
+*_grid_search.csv
+
+# ── Model artifacts ──
+*_lgbm_model.txt
+*_catboost_model.cbm
+
+# ── Charts and HTML output ──
+*_pnl_chart.png
+*.html
+!README.md
+
+# ── Python ──
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# ── Virtual environments ──
+venv/
+env/
+.venv/
+.env
+
+# ── IDE ──
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ── Temp files ──
+temp_*
+*.tmp
+*.log
+
+# ── Claude Code ──
+.claude/
+catboost_info/
+=*
+nfl_meta_xgb.json

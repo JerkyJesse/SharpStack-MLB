@@ -1,0 +1,701 @@
+Loading game data ...
+  14264 games loaded.
+
+Baseline eval ...
+Baseline: 56.4708%
+
+
+==================================================
+Sweeping: mov_cap  (current=0.0)
+    Coarse sweep mov_cap: 0.0 to 20.0 step 1.0 (21 pts)
+    mov_cap=1.0000  acc=56.3517%
+    mov_cap=2.0000  acc=56.3306%
+    mov_cap=3.0000  acc=56.3166%
+    mov_cap=4.0000  acc=56.3446%
+    mov_cap=5.0000  acc=56.3867%
+    mov_cap=6.0000  acc=56.4218%
+    mov_cap=7.0000  acc=56.4989% ** BEST
+    mov_cap=8.0000  acc=56.4778%
+    mov_cap=9.0000  acc=56.5059% ** BEST
+    mov_cap=10.0000  acc=56.4989%
+    mov_cap=11.0000  acc=56.4989%
+    mov_cap=12.0000  acc=56.5129% ** BEST
+    mov_cap=13.0000  acc=56.5059%
+    mov_cap=14.0000  acc=56.4919%
+    mov_cap=15.0000  acc=56.4919%
+    mov_cap=16.0000  acc=56.4849%
+    mov_cap=17.0000  acc=56.4849%
+    mov_cap=18.0000  acc=56.4778%
+    mov_cap=19.0000  acc=56.4778%
+    mov_cap=20.0000  acc=56.4778%
+    Fine sweep mov_cap: 10.00 to 14.00 step 0.2500 (17 pts)
+    mov_cap=10.0000  acc=56.4989%
+    mov_cap=10.2500  acc=56.4989%
+    mov_cap=10.5000  acc=56.5059%
+    mov_cap=10.7500  acc=56.5129%
+    mov_cap=11.0000  acc=56.4989%
+    mov_cap=11.2500  acc=56.5129%
+    mov_cap=11.5000  acc=56.5199% ** BEST
+    mov_cap=11.7500  acc=56.5269% ** BEST
+    mov_cap=12.0000  acc=56.5129%
+    mov_cap=12.2500  acc=56.5129%
+    mov_cap=12.5000  acc=56.5129%
+    mov_cap=12.7500  acc=56.5059%
+    mov_cap=13.0000  acc=56.5059%
+    mov_cap=13.2500  acc=56.4989%
+    mov_cap=13.5000  acc=56.4989%
+    mov_cap=13.7500  acc=56.4989%
+    mov_cap=14.0000  acc=56.4919%
+  >> IMPROVED mov_cap: 11.75 -> 11.75  (56.4708% -> 56.5269%)  [127.9s]
+
+==================================================
+Sweeping: east_travel_penalty  (current=0.0)
+    Coarse sweep east_travel_penalty: 0.0 to 50.0 step 2.0 (26 pts)
+    east_travel_penalty=2.0000  acc=56.5199%
+    east_travel_penalty=4.0000  acc=56.4989%
+    east_travel_penalty=6.0000  acc=56.5059%
+    east_travel_penalty=8.0000  acc=56.4568%
+    east_travel_penalty=10.0000  acc=56.4568%
+    east_travel_penalty=12.0000  acc=56.4849%
+    east_travel_penalty=14.0000  acc=56.4288%
+    east_travel_penalty=16.0000  acc=56.3797%
+    east_travel_penalty=18.0000  acc=56.3236%
+    east_travel_penalty=20.0000  acc=56.3026%
+    east_travel_penalty=22.0000  acc=56.2815%
+    east_travel_penalty=24.0000  acc=56.1974%
+    east_travel_penalty=26.0000  acc=56.2185%
+    east_travel_penalty=28.0000  acc=56.1834%
+    east_travel_penalty=30.0000  acc=56.1273%
+    east_travel_penalty=32.0000  acc=56.0502%
+    east_travel_penalty=34.0000  acc=56.0081%
+    east_travel_penalty=36.0000  acc=56.0011%
+    east_travel_penalty=38.0000  acc=55.9871%
+    east_travel_penalty=40.0000  acc=55.9941%
+    east_travel_penalty=42.0000  acc=55.9801%
+    east_travel_penalty=44.0000  acc=55.9941%
+    east_travel_penalty=46.0000  acc=55.9871%
+    east_travel_penalty=48.0000  acc=55.9591%
+    east_travel_penalty=50.0000  acc=55.9310%
+    Fine sweep east_travel_penalty: 0.00 to 4.00 step 0.5000 (9 pts)
+    east_travel_penalty=0.5000  acc=56.5339% ** BEST
+    east_travel_penalty=1.0000  acc=56.5409% ** BEST
+    east_travel_penalty=1.5000  acc=56.5199%
+    east_travel_penalty=2.0000  acc=56.5199%
+    east_travel_penalty=2.5000  acc=56.5199%
+    east_travel_penalty=3.0000  acc=56.5129%
+    east_travel_penalty=3.5000  acc=56.5129%
+    east_travel_penalty=4.0000  acc=56.4989%
+  >> IMPROVED east_travel_penalty: 1.0 -> 1.0  (56.5269% -> 56.5409%)  [109.7s]
+
+==================================================
+Sweeping: series_adaptation  (current=0.0)
+    Coarse sweep series_adaptation: 0.0 to 50.0 step 2.0 (26 pts)
+    series_adaptation=2.0000  acc=56.5129%
+    series_adaptation=4.0000  acc=56.4919%
+    series_adaptation=6.0000  acc=56.5129%
+    series_adaptation=8.0000  acc=56.4989%
+    series_adaptation=10.0000  acc=56.5199%
+    series_adaptation=12.0000  acc=56.5199%
+    series_adaptation=14.0000  acc=56.4989%
+    series_adaptation=16.0000  acc=56.4849%
+    series_adaptation=18.0000  acc=56.4919%
+    series_adaptation=20.0000  acc=56.4849%
+    series_adaptation=22.0000  acc=56.4778%
+    series_adaptation=24.0000  acc=56.4498%
+    series_adaptation=26.0000  acc=56.4708%
+    series_adaptation=28.0000  acc=56.4638%
+    series_adaptation=30.0000  acc=56.4638%
+    series_adaptation=32.0000  acc=56.4428%
+    series_adaptation=34.0000  acc=56.4148%
+    series_adaptation=36.0000  acc=56.4148%
+    series_adaptation=38.0000  acc=56.4218%
+    series_adaptation=40.0000  acc=56.4288%
+    series_adaptation=42.0000  acc=56.4148%
+    series_adaptation=44.0000  acc=56.4288%
+    series_adaptation=46.0000  acc=56.4358%
+    series_adaptation=48.0000  acc=56.4218%
+    series_adaptation=50.0000  acc=56.4218%
+    Fine sweep series_adaptation: 0.00 to 4.00 step 0.5000 (9 pts)
+    series_adaptation=0.5000  acc=56.5339%
+    series_adaptation=1.0000  acc=56.5199%
+    series_adaptation=1.5000  acc=56.5199%
+    series_adaptation=2.0000  acc=56.5129%
+    series_adaptation=2.5000  acc=56.5129%
+    series_adaptation=3.0000  acc=56.4989%
+    series_adaptation=3.5000  acc=56.4919%
+    series_adaptation=4.0000  acc=56.4919%
+  >> No improvement for series_adaptation  [106.2s]
+
+==================================================
+Sweeping: interleague_factor  (current=0.0)
+    Coarse sweep interleague_factor: 0.0 to 50.0 step 2.0 (26 pts)
+    interleague_factor=2.0000  acc=56.5409%
+    interleague_factor=4.0000  acc=56.5409%
+    interleague_factor=6.0000  acc=56.5059%
+    interleague_factor=8.0000  acc=56.5199%
+    interleague_factor=10.0000  acc=56.4989%
+    interleague_factor=12.0000  acc=56.5199%
+    interleague_factor=14.0000  acc=56.5339%
+    interleague_factor=16.0000  acc=56.5409%
+    interleague_factor=18.0000  acc=56.5199%
+    interleague_factor=20.0000  acc=56.4849%
+    interleague_factor=22.0000  acc=56.4989%
+    interleague_factor=24.0000  acc=56.5339%
+    interleague_factor=26.0000  acc=56.4568%
+    interleague_factor=28.0000  acc=56.3937%
+    interleague_factor=30.0000  acc=56.3166%
+    interleague_factor=32.0000  acc=56.2605%
+    interleague_factor=34.0000  acc=56.2255%
+    interleague_factor=36.0000  acc=56.2745%
+    interleague_factor=38.0000  acc=56.2605%
+    interleague_factor=40.0000  acc=56.2886%
+    interleague_factor=42.0000  acc=56.2255%
+    interleague_factor=44.0000  acc=56.1273%
+    interleague_factor=46.0000  acc=56.0572%
+    interleague_factor=48.0000  acc=56.0782%
+    interleague_factor=50.0000  acc=56.0712%
+    Fine sweep interleague_factor: 0.00 to 4.00 step 0.5000 (9 pts)
+    interleague_factor=0.5000  acc=56.5480% ** BEST
+    interleague_factor=1.0000  acc=56.5480%
+    interleague_factor=1.5000  acc=56.5129%
+    interleague_factor=2.0000  acc=56.5409%
+    interleague_factor=2.5000  acc=56.5269%
+    interleague_factor=3.0000  acc=56.5339%
+    interleague_factor=3.5000  acc=56.5339%
+    interleague_factor=4.0000  acc=56.5409%
+  >> IMPROVED interleague_factor: 0.5 -> 0.5  (56.5409% -> 56.5480%)  [95.1s]
+
+==================================================
+Sweeping: bullpen_factor  (current=0.0)
+    Coarse sweep bullpen_factor: 0.0 to 50.0 step 2.0 (26 pts)
+    bullpen_factor=2.0000  acc=56.5339%
+    bullpen_factor=4.0000  acc=56.5409%
+    bullpen_factor=6.0000  acc=56.5409%
+    bullpen_factor=8.0000  acc=56.5480%
+    bullpen_factor=10.0000  acc=56.5269%
+    bullpen_factor=12.0000  acc=56.5059%
+    bullpen_factor=14.0000  acc=56.5059%
+    bullpen_factor=16.0000  acc=56.5129%
+    bullpen_factor=18.0000  acc=56.4989%
+    bullpen_factor=20.0000  acc=56.4989%
+    bullpen_factor=22.0000  acc=56.5129%
+    bullpen_factor=24.0000  acc=56.5059%
+    bullpen_factor=26.0000  acc=56.4919%
+    bullpen_factor=28.0000  acc=56.4708%
+    bullpen_factor=30.0000  acc=56.4708%
+    bullpen_factor=32.0000  acc=56.4778%
+    bullpen_factor=34.0000  acc=56.4849%
+    bullpen_factor=36.0000  acc=56.4849%
+    bullpen_factor=38.0000  acc=56.4708%
+    bullpen_factor=40.0000  acc=56.4568%
+    bullpen_factor=42.0000  acc=56.4568%
+    bullpen_factor=44.0000  acc=56.4778%
+    bullpen_factor=46.0000  acc=56.4778%
+    bullpen_factor=48.0000  acc=56.4778%
+    bullpen_factor=50.0000  acc=56.4778%
+    Fine sweep bullpen_factor: 0.00 to 4.00 step 0.5000 (9 pts)
+    bullpen_factor=0.5000  acc=56.5480%
+    bullpen_factor=1.0000  acc=56.5480%
+    bullpen_factor=1.5000  acc=56.5409%
+    bullpen_factor=2.0000  acc=56.5339%
+    bullpen_factor=2.5000  acc=56.5269%
+    bullpen_factor=3.0000  acc=56.5269%
+    bullpen_factor=3.5000  acc=56.5269%
+    bullpen_factor=4.0000  acc=56.5409%
+  >> No improvement for bullpen_factor  [94.1s]
+
+==================================================
+Sweeping: opp_pitcher_factor  (current=0.0)
+    Coarse sweep opp_pitcher_factor: 0.0 to 50.0 step 2.0 (26 pts)
+    opp_pitcher_factor=2.0000  acc=56.4498%
+    opp_pitcher_factor=4.0000  acc=56.4428%
+    opp_pitcher_factor=6.0000  acc=56.4638%
+    opp_pitcher_factor=8.0000  acc=56.3657%
+    opp_pitcher_factor=10.0000  acc=56.2675%
+    opp_pitcher_factor=12.0000  acc=56.2325%
+    opp_pitcher_factor=14.0000  acc=56.1413%
+    opp_pitcher_factor=16.0000  acc=56.1834%
+    opp_pitcher_factor=18.0000  acc=56.1764%
+    opp_pitcher_factor=20.0000  acc=56.1904%
+    opp_pitcher_factor=22.0000  acc=56.2185%
+    opp_pitcher_factor=24.0000  acc=56.1834%
+    opp_pitcher_factor=26.0000  acc=56.1974%
+    opp_pitcher_factor=28.0000  acc=56.1413%
+    opp_pitcher_factor=30.0000  acc=56.0923%
+    opp_pitcher_factor=32.0000  acc=56.0642%
+    opp_pitcher_factor=34.0000  acc=56.0502%
+    opp_pitcher_factor=36.0000  acc=56.0151%
+    opp_pitcher_factor=38.0000  acc=55.9941%
+    opp_pitcher_factor=40.0000  acc=55.9240%
+    opp_pitcher_factor=42.0000  acc=55.9310%
+    opp_pitcher_factor=44.0000  acc=55.8609%
+    opp_pitcher_factor=46.0000  acc=55.8890%
+    opp_pitcher_factor=48.0000  acc=55.8469%
+    opp_pitcher_factor=50.0000  acc=55.7838%
+    Fine sweep opp_pitcher_factor: 0.00 to 4.00 step 0.5000 (9 pts)
+    opp_pitcher_factor=0.5000  acc=56.5339%
+    opp_pitcher_factor=1.0000  acc=56.4919%
+    opp_pitcher_factor=1.5000  acc=56.5129%
+    opp_pitcher_factor=2.0000  acc=56.4498%
+    opp_pitcher_factor=2.5000  acc=56.4428%
+    opp_pitcher_factor=3.0000  acc=56.4077%
+    opp_pitcher_factor=3.5000  acc=56.4007%
+    opp_pitcher_factor=4.0000  acc=56.4428%
+  >> No improvement for opp_pitcher_factor  [94.5s]
+
+==================================================
+Sweeping: altitude_factor  (current=0.0)
+    Coarse sweep altitude_factor: 0.0 to 10.0 step 0.5 (21 pts)
+    altitude_factor=0.5000  acc=56.5480%
+    altitude_factor=1.0000  acc=56.5480%
+    altitude_factor=1.5000  acc=56.5480%
+    altitude_factor=2.0000  acc=56.5480%
+    altitude_factor=2.5000  acc=56.5480%
+    altitude_factor=3.0000  acc=56.5480%
+    altitude_factor=3.5000  acc=56.5480%
+    altitude_factor=4.0000  acc=56.5480%
+    altitude_factor=4.5000  acc=56.5480%
+    altitude_factor=5.0000  acc=56.5480%
+    altitude_factor=5.5000  acc=56.5480%
+    altitude_factor=6.0000  acc=56.5480%
+    altitude_factor=6.5000  acc=56.5480%
+    altitude_factor=7.0000  acc=56.5480%
+    altitude_factor=7.5000  acc=56.5480%
+    altitude_factor=8.0000  acc=56.5480%
+    altitude_factor=8.5000  acc=56.5480%
+    altitude_factor=9.0000  acc=56.5480%
+    altitude_factor=9.5000  acc=56.5480%
+    altitude_factor=10.0000  acc=56.5480%
+    Fine sweep altitude_factor: 0.00 to 1.00 step 0.1250 (9 pts)
+    altitude_factor=0.1250  acc=56.5480%
+    altitude_factor=0.2500  acc=56.5480%
+    altitude_factor=0.3750  acc=56.5480%
+    altitude_factor=0.5000  acc=56.5480%
+    altitude_factor=0.6250  acc=56.5480%
+    altitude_factor=0.7500  acc=56.5480%
+    altitude_factor=0.8750  acc=56.5480%
+    altitude_factor=1.0000  acc=56.5480%
+  >> No improvement for altitude_factor  [79.7s]
+
+==================================================
+Sweeping: home_road_factor  (current=0.0)
+    Coarse sweep home_road_factor: 0.0 to 50.0 step 2.0 (26 pts)
+    home_road_factor=2.0000  acc=56.5269%
+    home_road_factor=4.0000  acc=56.5409%
+    home_road_factor=6.0000  acc=56.4989%
+    home_road_factor=8.0000  acc=56.5059%
+    home_road_factor=10.0000  acc=56.4708%
+    home_road_factor=12.0000  acc=56.4218%
+    home_road_factor=14.0000  acc=56.4148%
+    home_road_factor=16.0000  acc=56.3797%
+    home_road_factor=18.0000  acc=56.3306%
+    home_road_factor=20.0000  acc=56.3306%
+    home_road_factor=22.0000  acc=56.3236%
+    home_road_factor=24.0000  acc=56.3376%
+    home_road_factor=26.0000  acc=56.3517%
+    home_road_factor=28.0000  acc=56.3587%
+    home_road_factor=30.0000  acc=56.3376%
+    home_road_factor=32.0000  acc=56.4077%
+    home_road_factor=34.0000  acc=56.3937%
+    home_road_factor=36.0000  acc=56.4148%
+    home_road_factor=38.0000  acc=56.4288%
+    home_road_factor=40.0000  acc=56.4077%
+    home_road_factor=42.0000  acc=56.4498%
+    home_road_factor=44.0000  acc=56.4358%
+    home_road_factor=46.0000  acc=56.4148%
+    home_road_factor=48.0000  acc=56.4218%
+    home_road_factor=50.0000  acc=56.4218%
+    Fine sweep home_road_factor: 0.00 to 4.00 step 0.5000 (9 pts)
+    home_road_factor=0.5000  acc=56.5409%
+    home_road_factor=1.0000  acc=56.5339%
+    home_road_factor=1.5000  acc=56.5339%
+    home_road_factor=2.0000  acc=56.5269%
+    home_road_factor=2.5000  acc=56.5269%
+    home_road_factor=3.0000  acc=56.5269%
+    home_road_factor=3.5000  acc=56.5339%
+    home_road_factor=4.0000  acc=56.5409%
+  >> No improvement for home_road_factor  [94.4s]
+
+==================================================
+Sweeping: homestand_factor  (current=0.0)
+    Coarse sweep homestand_factor: 0.0 to 50.0 step 2.0 (26 pts)
+    homestand_factor=2.0000  acc=56.4708%
+    homestand_factor=4.0000  acc=56.3867%
+    homestand_factor=6.0000  acc=56.2745%
+    homestand_factor=8.0000  acc=56.0923%
+    homestand_factor=10.0000  acc=55.9871%
+    homestand_factor=12.0000  acc=55.8469%
+    homestand_factor=14.0000  acc=55.7417%
+    homestand_factor=16.0000  acc=55.6506%
+    homestand_factor=18.0000  acc=55.5595%
+    homestand_factor=20.0000  acc=55.3001%
+    homestand_factor=22.0000  acc=55.1528%
+    homestand_factor=24.0000  acc=55.0477%
+    homestand_factor=26.0000  acc=54.9706%
+    homestand_factor=28.0000  acc=54.9004%
+    homestand_factor=30.0000  acc=54.7953%
+    homestand_factor=32.0000  acc=54.7112%
+    homestand_factor=34.0000  acc=54.6901%
+    homestand_factor=36.0000  acc=54.7112%
+    homestand_factor=38.0000  acc=54.6200%
+    homestand_factor=40.0000  acc=54.4728%
+    homestand_factor=42.0000  acc=54.2975%
+    homestand_factor=44.0000  acc=54.2134%
+    homestand_factor=46.0000  acc=54.1643%
+    homestand_factor=48.0000  acc=54.1363%
+    homestand_factor=50.0000  acc=54.0802%
+    Fine sweep homestand_factor: 0.00 to 4.00 step 0.5000 (9 pts)
+    homestand_factor=0.5000  acc=56.5199%
+    homestand_factor=1.0000  acc=56.4989%
+    homestand_factor=1.5000  acc=56.5199%
+    homestand_factor=2.0000  acc=56.4708%
+    homestand_factor=2.5000  acc=56.4638%
+    homestand_factor=3.0000  acc=56.4007%
+    homestand_factor=3.5000  acc=56.3236%
+    homestand_factor=4.0000  acc=56.3867%
+  >> No improvement for homestand_factor  [94.1s]
+
+==================================================
+Sweeping: road_trip_factor  (current=0.0)
+    Coarse sweep road_trip_factor: 0.0 to 50.0 step 2.0 (26 pts)
+    road_trip_factor=2.0000  acc=56.5970% ** BEST
+    road_trip_factor=4.0000  acc=56.6391% ** BEST
+    road_trip_factor=6.0000  acc=56.6461% ** BEST
+    road_trip_factor=8.0000  acc=56.6531% ** BEST
+    road_trip_factor=10.0000  acc=56.4708%
+    road_trip_factor=12.0000  acc=56.3026%
+    road_trip_factor=14.0000  acc=56.1483%
+    road_trip_factor=16.0000  acc=55.7768%
+    road_trip_factor=18.0000  acc=55.6927%
+    road_trip_factor=20.0000  acc=55.4753%
+    road_trip_factor=22.0000  acc=55.5034%
+    road_trip_factor=24.0000  acc=55.3982%
+    road_trip_factor=26.0000  acc=55.4052%
+    road_trip_factor=28.0000  acc=55.4262%
+    road_trip_factor=30.0000  acc=55.3001%
+    road_trip_factor=32.0000  acc=55.2229%
+    road_trip_factor=34.0000  acc=55.0967%
+    road_trip_factor=36.0000  acc=54.9776%
+    road_trip_factor=38.0000  acc=54.8374%
+    road_trip_factor=40.0000  acc=54.7743%
+    road_trip_factor=42.0000  acc=54.6831%
+    road_trip_factor=44.0000  acc=54.6060%
+    road_trip_factor=46.0000  acc=54.5780%
+    road_trip_factor=48.0000  acc=54.5359%
+    road_trip_factor=50.0000  acc=54.5079%
+    Fine sweep road_trip_factor: 4.00 to 12.00 step 0.5000 (17 pts)
+    road_trip_factor=4.0000  acc=56.6391%
+    road_trip_factor=4.5000  acc=56.5690%
+    road_trip_factor=5.0000  acc=56.5269%
+    road_trip_factor=5.5000  acc=56.5620%
+    road_trip_factor=6.0000  acc=56.6461%
+    road_trip_factor=6.5000  acc=56.6321%
+    road_trip_factor=7.0000  acc=56.6952% ** BEST
+    road_trip_factor=7.5000  acc=56.6812%
+    road_trip_factor=8.0000  acc=56.6531%
+    road_trip_factor=8.5000  acc=56.5900%
+    road_trip_factor=9.0000  acc=56.4638%
+    road_trip_factor=9.5000  acc=56.4218%
+    road_trip_factor=10.0000  acc=56.4708%
+    road_trip_factor=10.5000  acc=56.4849%
+    road_trip_factor=11.0000  acc=56.3937%
+    road_trip_factor=11.5000  acc=56.3727%
+    road_trip_factor=12.0000  acc=56.3026%
+  >> IMPROVED road_trip_factor: 7.0 -> 7.0  (56.5480% -> 56.6952%)  [119.6s]
+
+==================================================
+Sweeping: win_streak_factor  (current=0.0)
+    Coarse sweep win_streak_factor: 0.0 to 50.0 step 2.0 (26 pts)
+    win_streak_factor=2.0000  acc=56.6601%
+    win_streak_factor=4.0000  acc=56.6952%
+    win_streak_factor=6.0000  acc=56.5620%
+    win_streak_factor=8.0000  acc=56.3657%
+    win_streak_factor=10.0000  acc=56.2956%
+    win_streak_factor=12.0000  acc=56.1694%
+    win_streak_factor=14.0000  acc=56.1974%
+    win_streak_factor=16.0000  acc=56.0432%
+    win_streak_factor=18.0000  acc=56.0292%
+    win_streak_factor=20.0000  acc=56.0712%
+    win_streak_factor=22.0000  acc=56.0432%
+    win_streak_factor=24.0000  acc=55.9801%
+    win_streak_factor=26.0000  acc=55.9240%
+    win_streak_factor=28.0000  acc=55.7768%
+    win_streak_factor=30.0000  acc=55.6786%
+    win_streak_factor=32.0000  acc=55.6436%
+    win_streak_factor=34.0000  acc=55.5735%
+    win_streak_factor=36.0000  acc=55.6927%
+    win_streak_factor=38.0000  acc=55.5805%
+    win_streak_factor=40.0000  acc=55.5665%
+    win_streak_factor=42.0000  acc=55.5805%
+    win_streak_factor=44.0000  acc=55.3982%
+    win_streak_factor=46.0000  acc=55.3912%
+    win_streak_factor=48.0000  acc=55.3421%
+    win_streak_factor=50.0000  acc=55.3351%
+    Fine sweep win_streak_factor: 0.00 to 4.00 step 0.5000 (9 pts)
+    win_streak_factor=0.5000  acc=56.7583% ** BEST
+    win_streak_factor=1.0000  acc=56.6952%
+    win_streak_factor=1.5000  acc=56.6601%
+    win_streak_factor=2.0000  acc=56.6601%
+    win_streak_factor=2.5000  acc=56.6531%
+    win_streak_factor=3.0000  acc=56.7092%
+    win_streak_factor=3.5000  acc=56.6531%
+    win_streak_factor=4.0000  acc=56.6952%
+  >> IMPROVED win_streak_factor: 0.5 -> 0.5  (56.6952% -> 56.7583%)  [95.4s]
+
+==================================================
+Sweeping: season_phase_factor  (current=0.0)
+    Coarse sweep season_phase_factor: 0.0 to 50.0 step 2.0 (26 pts)
+    season_phase_factor=2.0000  acc=56.7583%
+    season_phase_factor=4.0000  acc=56.7583%
+    season_phase_factor=6.0000  acc=56.7583%
+    season_phase_factor=8.0000  acc=56.7583%
+    season_phase_factor=10.0000  acc=56.7583%
+    season_phase_factor=12.0000  acc=56.7583%
+    season_phase_factor=14.0000  acc=56.7583%
+    season_phase_factor=16.0000  acc=56.7583%
+    season_phase_factor=18.0000  acc=56.7583%
+    season_phase_factor=20.0000  acc=56.7583%
+    season_phase_factor=22.0000  acc=56.7583%
+    season_phase_factor=24.0000  acc=56.7583%
+    season_phase_factor=26.0000  acc=56.7583%
+    season_phase_factor=28.0000  acc=56.7583%
+    season_phase_factor=30.0000  acc=56.7583%
+    season_phase_factor=32.0000  acc=56.7583%
+    season_phase_factor=34.0000  acc=56.7583%
+    season_phase_factor=36.0000  acc=56.7583%
+    season_phase_factor=38.0000  acc=56.7583%
+    season_phase_factor=40.0000  acc=56.7583%
+    season_phase_factor=42.0000  acc=56.7583%
+    season_phase_factor=44.0000  acc=56.7583%
+    season_phase_factor=46.0000  acc=56.7583%
+    season_phase_factor=48.0000  acc=56.7583%
+    season_phase_factor=50.0000  acc=56.7583%
+    Fine sweep season_phase_factor: 0.00 to 4.00 step 0.5000 (9 pts)
+    season_phase_factor=0.5000  acc=56.7583%
+    season_phase_factor=1.0000  acc=56.7583%
+    season_phase_factor=1.5000  acc=56.7583%
+    season_phase_factor=2.0000  acc=56.7583%
+    season_phase_factor=2.5000  acc=56.7583%
+    season_phase_factor=3.0000  acc=56.7583%
+    season_phase_factor=3.5000  acc=56.7583%
+    season_phase_factor=4.0000  acc=56.7583%
+  >> No improvement for season_phase_factor  [95.9s]
+
+==================================================
+Sweeping: scoring_consistency_factor  (current=0.0)
+    Coarse sweep scoring_consistency_factor: 0.0 to 50.0 step 2.0 (26 pts)
+    scoring_consistency_factor=2.0000  acc=56.7022%
+    scoring_consistency_factor=4.0000  acc=56.7022%
+    scoring_consistency_factor=6.0000  acc=56.6531%
+    scoring_consistency_factor=8.0000  acc=56.6531%
+    scoring_consistency_factor=10.0000  acc=56.6531%
+    scoring_consistency_factor=12.0000  acc=56.6461%
+    scoring_consistency_factor=14.0000  acc=56.6181%
+    scoring_consistency_factor=16.0000  acc=56.5970%
+    scoring_consistency_factor=18.0000  acc=56.5480%
+    scoring_consistency_factor=20.0000  acc=56.5550%
+    scoring_consistency_factor=22.0000  acc=56.5550%
+    scoring_consistency_factor=24.0000  acc=56.4989%
+    scoring_consistency_factor=26.0000  acc=56.4218%
+    scoring_consistency_factor=28.0000  acc=56.4288%
+    scoring_consistency_factor=30.0000  acc=56.4358%
+    scoring_consistency_factor=32.0000  acc=56.4358%
+    scoring_consistency_factor=34.0000  acc=56.4358%
+    scoring_consistency_factor=36.0000  acc=56.4428%
+    scoring_consistency_factor=38.0000  acc=56.4007%
+    scoring_consistency_factor=40.0000  acc=56.3727%
+    scoring_consistency_factor=42.0000  acc=56.3446%
+    scoring_consistency_factor=44.0000  acc=56.3236%
+    scoring_consistency_factor=46.0000  acc=56.3587%
+    scoring_consistency_factor=48.0000  acc=56.3797%
+    scoring_consistency_factor=50.0000  acc=56.3657%
+    Fine sweep scoring_consistency_factor: 0.00 to 4.00 step 0.5000 (9 pts)
+    scoring_consistency_factor=0.5000  acc=56.7232%
+    scoring_consistency_factor=1.0000  acc=56.7162%
+    scoring_consistency_factor=1.5000  acc=56.6952%
+    scoring_consistency_factor=2.0000  acc=56.7022%
+    scoring_consistency_factor=2.5000  acc=56.6812%
+    scoring_consistency_factor=3.0000  acc=56.6671%
+    scoring_consistency_factor=3.5000  acc=56.6882%
+    scoring_consistency_factor=4.0000  acc=56.7022%
+  >> No improvement for scoring_consistency_factor  [139.8s]
+
+==================================================
+Sweeping: mean_reversion  (current=0.0)
+    Coarse sweep mean_reversion: 0.0 to 50.0 step 2.0 (26 pts)
+    mean_reversion=2.0000  acc=56.7583%
+    mean_reversion=4.0000  acc=56.7092%
+    mean_reversion=6.0000  acc=56.6882%
+    mean_reversion=8.0000  acc=56.6882%
+    mean_reversion=10.0000  acc=56.6882%
+    mean_reversion=12.0000  acc=56.6882%
+    mean_reversion=14.0000  acc=56.6671%
+    mean_reversion=16.0000  acc=56.6671%
+    mean_reversion=18.0000  acc=56.6601%
+    mean_reversion=20.0000  acc=56.6601%
+    mean_reversion=22.0000  acc=56.6531%
+    mean_reversion=24.0000  acc=56.6461%
+    mean_reversion=26.0000  acc=56.6321%
+    mean_reversion=28.0000  acc=56.6181%
+    mean_reversion=30.0000  acc=56.6181%
+    mean_reversion=32.0000  acc=56.6251%
+    mean_reversion=34.0000  acc=56.5970%
+    mean_reversion=36.0000  acc=56.5970%
+    mean_reversion=38.0000  acc=56.5760%
+    mean_reversion=40.0000  acc=56.5409%
+    mean_reversion=42.0000  acc=56.5199%
+    mean_reversion=44.0000  acc=56.5199%
+    mean_reversion=46.0000  acc=56.5409%
+    mean_reversion=48.0000  acc=56.5269%
+    mean_reversion=50.0000  acc=56.5199%
+    Fine sweep mean_reversion: 0.00 to 4.00 step 0.5000 (9 pts)
+    mean_reversion=0.5000  acc=56.7583%
+    mean_reversion=1.0000  acc=56.7583%
+    mean_reversion=1.5000  acc=56.7583%
+    mean_reversion=2.0000  acc=56.7583%
+    mean_reversion=2.5000  acc=56.7513%
+    mean_reversion=3.0000  acc=56.7513%
+    mean_reversion=3.5000  acc=56.7302%
+    mean_reversion=4.0000  acc=56.7092%
+  >> No improvement for mean_reversion  [95.9s]
+
+==================================================
+Sweeping: player_boost  (current=0.0)
+    Coarse sweep player_boost: 0.0 to 50.0 step 2.0 (26 pts)
+    player_boost=2.0000  acc=56.4989%
+    player_boost=4.0000  acc=56.4919%
+    player_boost=6.0000  acc=56.2886%
+    player_boost=8.0000  acc=56.4007%
+    player_boost=10.0000  acc=56.3026%
+    player_boost=12.0000  acc=56.4498%
+    player_boost=14.0000  acc=56.2395%
+    player_boost=16.0000  acc=56.2255%
+    player_boost=18.0000  acc=56.0362%
+    player_boost=20.0000  acc=56.1203%
+    player_boost=22.0000  acc=55.9941%
+    player_boost=24.0000  acc=55.9170%
+    player_boost=26.0000  acc=55.8329%
+    player_boost=28.0000  acc=55.6296%
+    player_boost=30.0000  acc=55.4683%
+    player_boost=32.0000  acc=55.4683%
+    player_boost=34.0000  acc=55.3001%
+    player_boost=36.0000  acc=55.2440%
+    player_boost=38.0000  acc=55.2510%
+    player_boost=40.0000  acc=55.1809%
+    player_boost=42.0000  acc=55.1178%
+    player_boost=44.0000  acc=55.1038%
+    player_boost=46.0000  acc=54.9776%
+    player_boost=48.0000  acc=54.9215%
+    player_boost=50.0000  acc=54.8023%
+    Fine sweep player_boost: 0.00 to 4.00 step 0.5000 (9 pts)
+    player_boost=0.5000  acc=56.6391%
+    player_boost=1.0000  acc=56.5970%
+    player_boost=1.5000  acc=56.5550%
+    player_boost=2.0000  acc=56.4989%
+    player_boost=2.5000  acc=56.5550%
+    player_boost=3.0000  acc=56.6251%
+    player_boost=3.5000  acc=56.6251%
+    player_boost=4.0000  acc=56.4919%
+  >> No improvement for player_boost  [95.6s]
+
+==================================================
+Sweeping: park_factor_weight  (current=0.0)
+    Coarse sweep park_factor_weight: 0.0 to 10.0 step 0.5 (21 pts)
+    park_factor_weight=0.5000  acc=56.6110%
+    park_factor_weight=1.0000  acc=56.5269%
+    park_factor_weight=1.5000  acc=56.3517%
+    park_factor_weight=2.0000  acc=56.1694%
+    park_factor_weight=2.5000  acc=56.1343%
+    park_factor_weight=3.0000  acc=56.0712%
+    park_factor_weight=3.5000  acc=55.9030%
+    park_factor_weight=4.0000  acc=55.6576%
+    park_factor_weight=4.5000  acc=55.6506%
+    park_factor_weight=5.0000  acc=55.5735%
+    park_factor_weight=5.5000  acc=55.5314%
+    park_factor_weight=6.0000  acc=55.5314%
+    park_factor_weight=6.5000  acc=55.5314%
+    park_factor_weight=7.0000  acc=55.4823%
+    park_factor_weight=7.5000  acc=55.3001%
+    park_factor_weight=8.0000  acc=55.2720%
+    park_factor_weight=8.5000  acc=55.2510%
+    park_factor_weight=9.0000  acc=55.1669%
+    park_factor_weight=9.5000  acc=55.0897%
+    park_factor_weight=10.0000  acc=54.9846%
+    Fine sweep park_factor_weight: 0.00 to 1.00 step 0.1250 (9 pts)
+    park_factor_weight=0.1250  acc=56.6812%
+    park_factor_weight=0.2500  acc=56.6391%
+    park_factor_weight=0.3750  acc=56.6251%
+    park_factor_weight=0.5000  acc=56.6110%
+    park_factor_weight=0.6250  acc=56.5690%
+    park_factor_weight=0.7500  acc=56.5620%
+    park_factor_weight=0.8750  acc=56.5339%
+    park_factor_weight=1.0000  acc=56.5269%
+  >> No improvement for park_factor_weight  [81.0s]
+
+==================================================
+Sweeping: rest_advantage_cap  (current=0.0)
+    Coarse sweep rest_advantage_cap: 0.0 to 20.0 step 1.0 (21 pts)
+    rest_advantage_cap=1.0000  acc=56.7513%
+    rest_advantage_cap=2.0000  acc=56.7583%
+    rest_advantage_cap=3.0000  acc=56.7583%
+    rest_advantage_cap=4.0000  acc=56.7443%
+    rest_advantage_cap=5.0000  acc=56.7443%
+    rest_advantage_cap=6.0000  acc=56.7372%
+    rest_advantage_cap=7.0000  acc=56.7372%
+    rest_advantage_cap=8.0000  acc=56.7372%
+    rest_advantage_cap=9.0000  acc=56.7372%
+    rest_advantage_cap=10.0000  acc=56.7372%
+    rest_advantage_cap=11.0000  acc=56.7372%
+    rest_advantage_cap=12.0000  acc=56.7372%
+    rest_advantage_cap=13.0000  acc=56.7372%
+    rest_advantage_cap=14.0000  acc=56.7372%
+    rest_advantage_cap=15.0000  acc=56.7372%
+    rest_advantage_cap=16.0000  acc=56.7372%
+    rest_advantage_cap=17.0000  acc=56.7372%
+    rest_advantage_cap=18.0000  acc=56.7372%
+    rest_advantage_cap=19.0000  acc=56.7372%
+    rest_advantage_cap=20.0000  acc=56.7372%
+    Fine sweep rest_advantage_cap: 0.00 to 2.00 step 0.2500 (9 pts)
+    rest_advantage_cap=0.2500  acc=56.7653% ** BEST
+    rest_advantage_cap=0.5000  acc=56.7653%
+    rest_advantage_cap=0.7500  acc=56.7653%
+    rest_advantage_cap=1.0000  acc=56.7513%
+    rest_advantage_cap=1.2500  acc=56.7513%
+    rest_advantage_cap=1.5000  acc=56.7513%
+    rest_advantage_cap=1.7500  acc=56.7513%
+    rest_advantage_cap=2.0000  acc=56.7583%
+  >> IMPROVED rest_advantage_cap: 0.25 -> 0.25  (56.7583% -> 56.7653%)  [81.0s]
+
+============================================================
+SWEEP COMPLETE
+Baseline: 56.4708%  ->  Final: 56.7653%  (+0.2944%)
+
+Improved params:
+  mov_cap                  : 11.75 -> 11.75  (+0.0561%)
+  east_travel_penalty      : 1.0 -> 1.0  (+0.0140%)
+  interleague_factor       : 0.5 -> 0.5  (+0.0070%)
+  road_trip_factor         : 7.0 -> 7.0  (+0.1472%)
+  win_streak_factor        : 0.5 -> 0.5  (+0.0631%)
+  rest_advantage_cap       : 0.25 -> 0.25  (+0.0070%)
+
+All param values:
+  mov_cap                   = 11.75
+  east_travel_penalty       = 1.0
+  series_adaptation         = 0.0
+  interleague_factor        = 0.5
+  bullpen_factor            = 0.0
+  opp_pitcher_factor        = 0.0
+  altitude_factor           = 0.0
+  home_road_factor          = 0.0
+  homestand_factor          = 0.0
+  road_trip_factor          = 7.0
+  win_streak_factor         = 0.5
+  season_phase_factor       = 0.0
+  scoring_consistency_factor = 0.0
+  mean_reversion            = 0.0
+  player_boost              = 0.0
+  park_factor_weight        = 0.0
+  rest_advantage_cap        = 0.25
+
+Saving ...
+Done.

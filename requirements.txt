@@ -1,0 +1,31 @@
+# ══════════════════════════════════════════════════
+#  MLB Prediction Ensemble - Requirements
+# ══════════════════════════════════════════════════
+
+# Core (required)
+pandas>=1.5
+numpy>=1.24
+scipy>=1.10
+colorama>=0.4
+xgboost>=2.0
+requests>=2.28
+matplotlib>=3.7
+
+# MLB data APIs
+MLB-StatsAPI>=1.7         # MLB scores and stats
+pybaseball>=2.3           # Statcast data (xwOBA, xERA)
+
+# Prediction models
+hmmlearn>=0.3             # Hidden Markov Models
+filterpy>=1.4             # Kalman filters
+lightgbm>=4.0             # LightGBM gradient boosting
+catboost>=1.2             # CatBoost gradient boosting
+networkx>=3.0             # PageRank / graph analysis
+
+# Neural networks (CPU-only)
+torch>=2.0                # MLP + LSTM (install via: pip install torch --index-url https://download.pytorch.org/whl/cpu)
+
+# Optional (enhanced features)
+# nolds                   # Lyapunov exponents, Hurst exponent (chaos theory)
+# PyWavelets              # Wavelet transforms (signal processing)
+# openmeteo-requests      # Weather data (free, no API key)

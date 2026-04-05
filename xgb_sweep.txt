@@ -1,0 +1,714 @@
+
+============================================================
+  ENHANCED TEST: w0.7
+============================================================
+  Games tested:     14264
+  XGBoost predictions: 14018 (Elo-only for first 200)
+  Ensemble weight:  Elo=70% XGB=30%
+  --- Raw (uncalibrated) ---
+  Accuracy:         56.34%
+  Log Loss:         0.6829
+  Brier Score:      0.2449
+  --- Platt calibrated ---
+  Accuracy:         56.57%
+  Log Loss:         0.6822
+  Brier Score:      0.2446
+============================================================
+
+=======================================================
+  SHAP FEATURE IMPORTANCE (XGBoost)
+=======================================================
+  elo_prob          0.1004  |||||||||||||||||||||||||
+  elo_diff          0.0642  |||||||||||||||
+  elo_rating_h      0.0299  |||||||
+  avg_opp_elo_a     0.0291  |||||||
+  a_pitcher         0.0287  |||||||
+  pitcher_diff      0.0222  |||||
+  h_fatigue         0.0220  |||||
+  a_momentum        0.0196  ||||
+  elo_rating_a      0.0196  ||||
+  a_pyth_resid      0.0194  ||||
+  dominance_diff    0.0176  ||||
+  momentum_diff     0.0165  ||||
+  h_pyth_resid      0.0161  ||||
+  h_venue_wp        0.0158  |||
+  a_team_era        0.0155  |||
+  h_consistency     0.0154  |||
+  a_team_avg        0.0154  |||
+  margin_diff       0.0143  |||
+  h_momentum        0.0136  |||
+  a_off_trend       0.0135  |||
+  a_ppg             0.0130  |||
+  a_consistency     0.0122  |||
+  h_off_trend       0.0121  |||
+  opp_elo_diff      0.0120  ||
+  fatigue_diff      0.0114  ||
+  venue_wp_diff     0.0114  ||
+  a_clutch          0.0113  ||
+  h_papg            0.0109  ||
+  a_decay_papg      0.0109  ||
+  off_trend_diff    0.0108  ||
+  h_score_vol       0.0104  ||
+  pyth_resid_diff   0.0102  ||
+  season_game_num   0.0099  ||
+  streak_diff       0.0098  ||
+  a_team_ops        0.0094  ||
+  margin_trend_a    0.0092  ||
+  avg_opp_elo_h     0.0092  ||
+  a_papg            0.0090  ||
+  h_decay_ppg       0.0090  ||
+  a_venue_wp        0.0086  ||
+  def_trend_diff    0.0086  ||
+  era_diff          0.0085  ||
+  h_team_ops        0.0084  ||
+  a_trend           0.0082  ||
+  total_points_ou   0.0080  |
+  month             0.0076  |
+  papg_diff         0.0075  |
+  h_trend           0.0074  |
+  decay_ppg_diff    0.0072  |
+  trend_diff        0.0071  |
+  h_sos_adj_wp      0.0069  |
+  ops_diff          0.0066  |
+  a_decay_ppg       0.0063  |
+  h_pitcher         0.0060  |
+  h_team_avg        0.0059  |
+  a_margin          0.0059  |
+  h_margin          0.0058  |
+  h_pyth            0.0057  |
+  a_sos_adj_wp      0.0056  |
+  sos_adj_wp_diff   0.0055  |
+  h_team_era        0.0052  |
+  h_def_trend       0.0050  |
+  pyth_diff         0.0048  |
+  a_def_trend       0.0042  |
+  margin_trend_h    0.0042  |
+  road_trip_len_a   0.0042  |
+  def_diff          0.0040  |
+  a_pyth            0.0040  
+  a_score_vol       0.0039  
+  h_decay_papg      0.0039  
+  ppg_diff          0.0038  
+  h_ppg             0.0037  
+  off_diff          0.0035  
+  avg_diff          0.0030  
+  a_fatigue         0.0030  
+  clutch_diff       0.0026  
+  h_streak          0.0024  
+  last3_wp_diff     0.0022  
+  decay_papg_diff   0.0022  
+  win_pct_diff      0.0020  
+  a_streak          0.0019  
+  a_win_pct         0.0017  
+  h_clutch          0.0016  
+  homestand_len_h   0.0015  
+  last3_wp_a        0.0013  
+  day_of_week       0.0012  
+  h_win_pct         0.0009  
+  rest_diff         0.0008  
+  road_trip_len_h   0.0007  
+  last3_wp_h        0.0002  
+  player_diff       0.0000  
+  h_rest            0.0000  
+  a_rest            0.0000  
+  is_b2b_h          0.0000  
+  is_b2b_a          0.0000  
+  homestand_len_a   0.0000  
+=======================================================
+  Rolling features contribute meaningful signal beyond Elo
+RESULT: elo_weight=0.70 acc=56.5690 ll=0.6822
+
+============================================================
+  ENHANCED TEST: w0.8
+============================================================
+  Games tested:     14264
+  XGBoost predictions: 14018 (Elo-only for first 200)
+  Ensemble weight:  Elo=80% XGB=20%
+  --- Raw (uncalibrated) ---
+  Accuracy:         56.60%
+  Log Loss:         0.6828
+  Brier Score:      0.2448
+  --- Platt calibrated ---
+  Accuracy:         56.58%
+  Log Loss:         0.6821
+  Brier Score:      0.2445
+============================================================
+
+=======================================================
+  SHAP FEATURE IMPORTANCE (XGBoost)
+=======================================================
+  elo_prob          0.1004  |||||||||||||||||||||||||
+  elo_diff          0.0642  |||||||||||||||
+  elo_rating_h      0.0299  |||||||
+  avg_opp_elo_a     0.0291  |||||||
+  a_pitcher         0.0287  |||||||
+  pitcher_diff      0.0222  |||||
+  h_fatigue         0.0220  |||||
+  a_momentum        0.0196  ||||
+  elo_rating_a      0.0196  ||||
+  a_pyth_resid      0.0194  ||||
+  dominance_diff    0.0176  ||||
+  momentum_diff     0.0165  ||||
+  h_pyth_resid      0.0161  ||||
+  h_venue_wp        0.0158  |||
+  a_team_era        0.0155  |||
+  h_consistency     0.0154  |||
+  a_team_avg        0.0154  |||
+  margin_diff       0.0143  |||
+  h_momentum        0.0136  |||
+  a_off_trend       0.0135  |||
+  a_ppg             0.0130  |||
+  a_consistency     0.0122  |||
+  h_off_trend       0.0121  |||
+  opp_elo_diff      0.0120  ||
+  fatigue_diff      0.0114  ||
+  venue_wp_diff     0.0114  ||
+  a_clutch          0.0113  ||
+  h_papg            0.0109  ||
+  a_decay_papg      0.0109  ||
+  off_trend_diff    0.0108  ||
+  h_score_vol       0.0104  ||
+  pyth_resid_diff   0.0102  ||
+  season_game_num   0.0099  ||
+  streak_diff       0.0098  ||
+  a_team_ops        0.0094  ||
+  margin_trend_a    0.0092  ||
+  avg_opp_elo_h     0.0092  ||
+  a_papg            0.0090  ||
+  h_decay_ppg       0.0090  ||
+  a_venue_wp        0.0086  ||
+  def_trend_diff    0.0086  ||
+  era_diff          0.0085  ||
+  h_team_ops        0.0084  ||
+  a_trend           0.0082  ||
+  total_points_ou   0.0080  |
+  month             0.0076  |
+  papg_diff         0.0075  |
+  h_trend           0.0074  |
+  decay_ppg_diff    0.0072  |
+  trend_diff        0.0071  |
+  h_sos_adj_wp      0.0069  |
+  ops_diff          0.0066  |
+  a_decay_ppg       0.0063  |
+  h_pitcher         0.0060  |
+  h_team_avg        0.0059  |
+  a_margin          0.0059  |
+  h_margin          0.0058  |
+  h_pyth            0.0057  |
+  a_sos_adj_wp      0.0056  |
+  sos_adj_wp_diff   0.0055  |
+  h_team_era        0.0052  |
+  h_def_trend       0.0050  |
+  pyth_diff         0.0048  |
+  a_def_trend       0.0042  |
+  margin_trend_h    0.0042  |
+  road_trip_len_a   0.0042  |
+  def_diff          0.0040  |
+  a_pyth            0.0040  
+  a_score_vol       0.0039  
+  h_decay_papg      0.0039  
+  ppg_diff          0.0038  
+  h_ppg             0.0037  
+  off_diff          0.0035  
+  avg_diff          0.0030  
+  a_fatigue         0.0030  
+  clutch_diff       0.0026  
+  h_streak          0.0024  
+  last3_wp_diff     0.0022  
+  decay_papg_diff   0.0022  
+  win_pct_diff      0.0020  
+  a_streak          0.0019  
+  a_win_pct         0.0017  
+  h_clutch          0.0016  
+  homestand_len_h   0.0015  
+  last3_wp_a        0.0013  
+  day_of_week       0.0012  
+  h_win_pct         0.0009  
+  rest_diff         0.0008  
+  road_trip_len_h   0.0007  
+  last3_wp_h        0.0002  
+  player_diff       0.0000  
+  h_rest            0.0000  
+  a_rest            0.0000  
+  is_b2b_h          0.0000  
+  is_b2b_a          0.0000  
+  homestand_len_a   0.0000  
+=======================================================
+  Rolling features contribute meaningful signal beyond Elo
+RESULT: elo_weight=0.80 acc=56.5760 ll=0.6821
+
+============================================================
+  ENHANCED TEST: w0.85
+============================================================
+  Games tested:     14264
+  XGBoost predictions: 14018 (Elo-only for first 200)
+  Ensemble weight:  Elo=85% XGB=15%
+  --- Raw (uncalibrated) ---
+  Accuracy:         56.65%
+  Log Loss:         0.6828
+  Brier Score:      0.2448
+  --- Platt calibrated ---
+  Accuracy:         56.66%
+  Log Loss:         0.6821
+  Brier Score:      0.2445
+============================================================
+
+=======================================================
+  SHAP FEATURE IMPORTANCE (XGBoost)
+=======================================================
+  elo_prob          0.1004  |||||||||||||||||||||||||
+  elo_diff          0.0642  |||||||||||||||
+  elo_rating_h      0.0299  |||||||
+  avg_opp_elo_a     0.0291  |||||||
+  a_pitcher         0.0287  |||||||
+  pitcher_diff      0.0222  |||||
+  h_fatigue         0.0220  |||||
+  a_momentum        0.0196  ||||
+  elo_rating_a      0.0196  ||||
+  a_pyth_resid      0.0194  ||||
+  dominance_diff    0.0176  ||||
+  momentum_diff     0.0165  ||||
+  h_pyth_resid      0.0161  ||||
+  h_venue_wp        0.0158  |||
+  a_team_era        0.0155  |||
+  h_consistency     0.0154  |||
+  a_team_avg        0.0154  |||
+  margin_diff       0.0143  |||
+  h_momentum        0.0136  |||
+  a_off_trend       0.0135  |||
+  a_ppg             0.0130  |||
+  a_consistency     0.0122  |||
+  h_off_trend       0.0121  |||
+  opp_elo_diff      0.0120  ||
+  fatigue_diff      0.0114  ||
+  venue_wp_diff     0.0114  ||
+  a_clutch          0.0113  ||
+  h_papg            0.0109  ||
+  a_decay_papg      0.0109  ||
+  off_trend_diff    0.0108  ||
+  h_score_vol       0.0104  ||
+  pyth_resid_diff   0.0102  ||
+  season_game_num   0.0099  ||
+  streak_diff       0.0098  ||
+  a_team_ops        0.0094  ||
+  margin_trend_a    0.0092  ||
+  avg_opp_elo_h     0.0092  ||
+  a_papg            0.0090  ||
+  h_decay_ppg       0.0090  ||
+  a_venue_wp        0.0086  ||
+  def_trend_diff    0.0086  ||
+  era_diff          0.0085  ||
+  h_team_ops        0.0084  ||
+  a_trend           0.0082  ||
+  total_points_ou   0.0080  |
+  month             0.0076  |
+  papg_diff         0.0075  |
+  h_trend           0.0074  |
+  decay_ppg_diff    0.0072  |
+  trend_diff        0.0071  |
+  h_sos_adj_wp      0.0069  |
+  ops_diff          0.0066  |
+  a_decay_ppg       0.0063  |
+  h_pitcher         0.0060  |
+  h_team_avg        0.0059  |
+  a_margin          0.0059  |
+  h_margin          0.0058  |
+  h_pyth            0.0057  |
+  a_sos_adj_wp      0.0056  |
+  sos_adj_wp_diff   0.0055  |
+  h_team_era        0.0052  |
+  h_def_trend       0.0050  |
+  pyth_diff         0.0048  |
+  a_def_trend       0.0042  |
+  margin_trend_h    0.0042  |
+  road_trip_len_a   0.0042  |
+  def_diff          0.0040  |
+  a_pyth            0.0040  
+  a_score_vol       0.0039  
+  h_decay_papg      0.0039  
+  ppg_diff          0.0038  
+  h_ppg             0.0037  
+  off_diff          0.0035  
+  avg_diff          0.0030  
+  a_fatigue         0.0030  
+  clutch_diff       0.0026  
+  h_streak          0.0024  
+  last3_wp_diff     0.0022  
+  decay_papg_diff   0.0022  
+  win_pct_diff      0.0020  
+  a_streak          0.0019  
+  a_win_pct         0.0017  
+  h_clutch          0.0016  
+  homestand_len_h   0.0015  
+  last3_wp_a        0.0013  
+  day_of_week       0.0012  
+  h_win_pct         0.0009  
+  rest_diff         0.0008  
+  road_trip_len_h   0.0007  
+  last3_wp_h        0.0002  
+  player_diff       0.0000  
+  h_rest            0.0000  
+  a_rest            0.0000  
+  is_b2b_h          0.0000  
+  is_b2b_a          0.0000  
+  homestand_len_a   0.0000  
+=======================================================
+  Rolling features contribute meaningful signal beyond Elo
+RESULT: elo_weight=0.85 acc=56.6601 ll=0.6821
+
+============================================================
+  ENHANCED TEST: w0.9
+============================================================
+  Games tested:     14264
+  XGBoost predictions: 14018 (Elo-only for first 200)
+  Ensemble weight:  Elo=90% XGB=10%
+  --- Raw (uncalibrated) ---
+  Accuracy:         56.74%
+  Log Loss:         0.6829
+  Brier Score:      0.2449
+  --- Platt calibrated ---
+  Accuracy:         56.47%
+  Log Loss:         0.6822
+  Brier Score:      0.2446
+============================================================
+
+=======================================================
+  SHAP FEATURE IMPORTANCE (XGBoost)
+=======================================================
+  elo_prob          0.1004  |||||||||||||||||||||||||
+  elo_diff          0.0642  |||||||||||||||
+  elo_rating_h      0.0299  |||||||
+  avg_opp_elo_a     0.0291  |||||||
+  a_pitcher         0.0287  |||||||
+  pitcher_diff      0.0222  |||||
+  h_fatigue         0.0220  |||||
+  a_momentum        0.0196  ||||
+  elo_rating_a      0.0196  ||||
+  a_pyth_resid      0.0194  ||||
+  dominance_diff    0.0176  ||||
+  momentum_diff     0.0165  ||||
+  h_pyth_resid      0.0161  ||||
+  h_venue_wp        0.0158  |||
+  a_team_era        0.0155  |||
+  h_consistency     0.0154  |||
+  a_team_avg        0.0154  |||
+  margin_diff       0.0143  |||
+  h_momentum        0.0136  |||
+  a_off_trend       0.0135  |||
+  a_ppg             0.0130  |||
+  a_consistency     0.0122  |||
+  h_off_trend       0.0121  |||
+  opp_elo_diff      0.0120  ||
+  fatigue_diff      0.0114  ||
+  venue_wp_diff     0.0114  ||
+  a_clutch          0.0113  ||
+  h_papg            0.0109  ||
+  a_decay_papg      0.0109  ||
+  off_trend_diff    0.0108  ||
+  h_score_vol       0.0104  ||
+  pyth_resid_diff   0.0102  ||
+  season_game_num   0.0099  ||
+  streak_diff       0.0098  ||
+  a_team_ops        0.0094  ||
+  margin_trend_a    0.0092  ||
+  avg_opp_elo_h     0.0092  ||
+  a_papg            0.0090  ||
+  h_decay_ppg       0.0090  ||
+  a_venue_wp        0.0086  ||
+  def_trend_diff    0.0086  ||
+  era_diff          0.0085  ||
+  h_team_ops        0.0084  ||
+  a_trend           0.0082  ||
+  total_points_ou   0.0080  |
+  month             0.0076  |
+  papg_diff         0.0075  |
+  h_trend           0.0074  |
+  decay_ppg_diff    0.0072  |
+  trend_diff        0.0071  |
+  h_sos_adj_wp      0.0069  |
+  ops_diff          0.0066  |
+  a_decay_ppg       0.0063  |
+  h_pitcher         0.0060  |
+  h_team_avg        0.0059  |
+  a_margin          0.0059  |
+  h_margin          0.0058  |
+  h_pyth            0.0057  |
+  a_sos_adj_wp      0.0056  |
+  sos_adj_wp_diff   0.0055  |
+  h_team_era        0.0052  |
+  h_def_trend       0.0050  |
+  pyth_diff         0.0048  |
+  a_def_trend       0.0042  |
+  margin_trend_h    0.0042  |
+  road_trip_len_a   0.0042  |
+  def_diff          0.0040  |
+  a_pyth            0.0040  
+  a_score_vol       0.0039  
+  h_decay_papg      0.0039  
+  ppg_diff          0.0038  
+  h_ppg             0.0037  
+  off_diff          0.0035  
+  avg_diff          0.0030  
+  a_fatigue         0.0030  
+  clutch_diff       0.0026  
+  h_streak          0.0024  
+  last3_wp_diff     0.0022  
+  decay_papg_diff   0.0022  
+  win_pct_diff      0.0020  
+  a_streak          0.0019  
+  a_win_pct         0.0017  
+  h_clutch          0.0016  
+  homestand_len_h   0.0015  
+  last3_wp_a        0.0013  
+  day_of_week       0.0012  
+  h_win_pct         0.0009  
+  rest_diff         0.0008  
+  road_trip_len_h   0.0007  
+  last3_wp_h        0.0002  
+  player_diff       0.0000  
+  h_rest            0.0000  
+  a_rest            0.0000  
+  is_b2b_h          0.0000  
+  is_b2b_a          0.0000  
+  homestand_len_a   0.0000  
+=======================================================
+  Rolling features contribute meaningful signal beyond Elo
+RESULT: elo_weight=0.90 acc=56.4708 ll=0.6822
+
+============================================================
+  ENHANCED TEST: w0.95
+============================================================
+  Games tested:     14264
+  XGBoost predictions: 14018 (Elo-only for first 200)
+  Ensemble weight:  Elo=95% XGB=5%
+  --- Raw (uncalibrated) ---
+  Accuracy:         56.74%
+  Log Loss:         0.6831
+  Brier Score:      0.2450
+  --- Platt calibrated ---
+  Accuracy:         56.54%
+  Log Loss:         0.6823
+  Brier Score:      0.2446
+============================================================
+
+=======================================================
+  SHAP FEATURE IMPORTANCE (XGBoost)
+=======================================================
+  elo_prob          0.1004  |||||||||||||||||||||||||
+  elo_diff          0.0642  |||||||||||||||
+  elo_rating_h      0.0299  |||||||
+  avg_opp_elo_a     0.0291  |||||||
+  a_pitcher         0.0287  |||||||
+  pitcher_diff      0.0222  |||||
+  h_fatigue         0.0220  |||||
+  a_momentum        0.0196  ||||
+  elo_rating_a      0.0196  ||||
+  a_pyth_resid      0.0194  ||||
+  dominance_diff    0.0176  ||||
+  momentum_diff     0.0165  ||||
+  h_pyth_resid      0.0161  ||||
+  h_venue_wp        0.0158  |||
+  a_team_era        0.0155  |||
+  h_consistency     0.0154  |||
+  a_team_avg        0.0154  |||
+  margin_diff       0.0143  |||
+  h_momentum        0.0136  |||
+  a_off_trend       0.0135  |||
+  a_ppg             0.0130  |||
+  a_consistency     0.0122  |||
+  h_off_trend       0.0121  |||
+  opp_elo_diff      0.0120  ||
+  fatigue_diff      0.0114  ||
+  venue_wp_diff     0.0114  ||
+  a_clutch          0.0113  ||
+  h_papg            0.0109  ||
+  a_decay_papg      0.0109  ||
+  off_trend_diff    0.0108  ||
+  h_score_vol       0.0104  ||
+  pyth_resid_diff   0.0102  ||
+  season_game_num   0.0099  ||
+  streak_diff       0.0098  ||
+  a_team_ops        0.0094  ||
+  margin_trend_a    0.0092  ||
+  avg_opp_elo_h     0.0092  ||
+  a_papg            0.0090  ||
+  h_decay_ppg       0.0090  ||
+  a_venue_wp        0.0086  ||
+  def_trend_diff    0.0086  ||
+  era_diff          0.0085  ||
+  h_team_ops        0.0084  ||
+  a_trend           0.0082  ||
+  total_points_ou   0.0080  |
+  month             0.0076  |
+  papg_diff         0.0075  |
+  h_trend           0.0074  |
+  decay_ppg_diff    0.0072  |
+  trend_diff        0.0071  |
+  h_sos_adj_wp      0.0069  |
+  ops_diff          0.0066  |
+  a_decay_ppg       0.0063  |
+  h_pitcher         0.0060  |
+  h_team_avg        0.0059  |
+  a_margin          0.0059  |
+  h_margin          0.0058  |
+  h_pyth            0.0057  |
+  a_sos_adj_wp      0.0056  |
+  sos_adj_wp_diff   0.0055  |
+  h_team_era        0.0052  |
+  h_def_trend       0.0050  |
+  pyth_diff         0.0048  |
+  a_def_trend       0.0042  |
+  margin_trend_h    0.0042  |
+  road_trip_len_a   0.0042  |
+  def_diff          0.0040  |
+  a_pyth            0.0040  
+  a_score_vol       0.0039  
+  h_decay_papg      0.0039  
+  ppg_diff          0.0038  
+  h_ppg             0.0037  
+  off_diff          0.0035  
+  avg_diff          0.0030  
+  a_fatigue         0.0030  
+  clutch_diff       0.0026  
+  h_streak          0.0024  
+  last3_wp_diff     0.0022  
+  decay_papg_diff   0.0022  
+  win_pct_diff      0.0020  
+  a_streak          0.0019  
+  a_win_pct         0.0017  
+  h_clutch          0.0016  
+  homestand_len_h   0.0015  
+  last3_wp_a        0.0013  
+  day_of_week       0.0012  
+  h_win_pct         0.0009  
+  rest_diff         0.0008  
+  road_trip_len_h   0.0007  
+  last3_wp_h        0.0002  
+  player_diff       0.0000  
+  h_rest            0.0000  
+  a_rest            0.0000  
+  is_b2b_h          0.0000  
+  is_b2b_a          0.0000  
+  homestand_len_a   0.0000  
+=======================================================
+  Rolling features contribute meaningful signal beyond Elo
+RESULT: elo_weight=0.95 acc=56.5409 ll=0.6823
+
+============================================================
+  ENHANCED TEST: w1.0
+============================================================
+  Games tested:     14264
+  XGBoost predictions: 14018 (Elo-only for first 200)
+  Ensemble weight:  Elo=100% XGB=0%
+  --- Raw (uncalibrated) ---
+  Accuracy:         56.92%
+  Log Loss:         0.6834
+  Brier Score:      0.2451
+  --- Platt calibrated ---
+  Accuracy:         56.47%
+  Log Loss:         0.6824
+  Brier Score:      0.2447
+============================================================
+
+=======================================================
+  SHAP FEATURE IMPORTANCE (XGBoost)
+=======================================================
+  elo_prob          0.1004  |||||||||||||||||||||||||
+  elo_diff          0.0642  |||||||||||||||
+  elo_rating_h      0.0299  |||||||
+  avg_opp_elo_a     0.0291  |||||||
+  a_pitcher         0.0287  |||||||
+  pitcher_diff      0.0222  |||||
+  h_fatigue         0.0220  |||||
+  a_momentum        0.0196  ||||
+  elo_rating_a      0.0196  ||||
+  a_pyth_resid      0.0194  ||||
+  dominance_diff    0.0176  ||||
+  momentum_diff     0.0165  ||||
+  h_pyth_resid      0.0161  ||||
+  h_venue_wp        0.0158  |||
+  a_team_era        0.0155  |||
+  h_consistency     0.0154  |||
+  a_team_avg        0.0154  |||
+  margin_diff       0.0143  |||
+  h_momentum        0.0136  |||
+  a_off_trend       0.0135  |||
+  a_ppg             0.0130  |||
+  a_consistency     0.0122  |||
+  h_off_trend       0.0121  |||
+  opp_elo_diff      0.0120  ||
+  fatigue_diff      0.0114  ||
+  venue_wp_diff     0.0114  ||
+  a_clutch          0.0113  ||
+  h_papg            0.0109  ||
+  a_decay_papg      0.0109  ||
+  off_trend_diff    0.0108  ||
+  h_score_vol       0.0104  ||
+  pyth_resid_diff   0.0102  ||
+  season_game_num   0.0099  ||
+  streak_diff       0.0098  ||
+  a_team_ops        0.0094  ||
+  margin_trend_a    0.0092  ||
+  avg_opp_elo_h     0.0092  ||
+  a_papg            0.0090  ||
+  h_decay_ppg       0.0090  ||
+  a_venue_wp        0.0086  ||
+  def_trend_diff    0.0086  ||
+  era_diff          0.0085  ||
+  h_team_ops        0.0084  ||
+  a_trend           0.0082  ||
+  total_points_ou   0.0080  |
+  month             0.0076  |
+  papg_diff         0.0075  |
+  h_trend           0.0074  |
+  decay_ppg_diff    0.0072  |
+  trend_diff        0.0071  |
+  h_sos_adj_wp      0.0069  |
+  ops_diff          0.0066  |
+  a_decay_ppg       0.0063  |
+  h_pitcher         0.0060  |
+  h_team_avg        0.0059  |
+  a_margin          0.0059  |
+  h_margin          0.0058  |
+  h_pyth            0.0057  |
+  a_sos_adj_wp      0.0056  |
+  sos_adj_wp_diff   0.0055  |
+  h_team_era        0.0052  |
+  h_def_trend       0.0050  |
+  pyth_diff         0.0048  |
+  a_def_trend       0.0042  |
+  margin_trend_h    0.0042  |
+  road_trip_len_a   0.0042  |
+  def_diff          0.0040  |
+  a_pyth            0.0040  
+  a_score_vol       0.0039  
+  h_decay_papg      0.0039  
+  ppg_diff          0.0038  
+  h_ppg             0.0037  
+  off_diff          0.0035  
+  avg_diff          0.0030  
+  a_fatigue         0.0030  
+  clutch_diff       0.0026  
+  h_streak          0.0024  
+  last3_wp_diff     0.0022  
+  decay_papg_diff   0.0022  
+  win_pct_diff      0.0020  
+  a_streak          0.0019  
+  a_win_pct         0.0017  
+  h_clutch          0.0016  
+  homestand_len_h   0.0015  
+  last3_wp_a        0.0013  
+  day_of_week       0.0012  
+  h_win_pct         0.0009  
+  rest_diff         0.0008  
+  road_trip_len_h   0.0007  
+  last3_wp_h        0.0002  
+  player_diff       0.0000  
+  h_rest            0.0000  
+  a_rest            0.0000  
+  is_b2b_h          0.0000  
+  is_b2b_a          0.0000  
+  homestand_len_a   0.0000  
+=======================================================
+  Rolling features contribute meaningful signal beyond Elo
+RESULT: elo_weight=1.00 acc=56.4708 ll=0.6824
