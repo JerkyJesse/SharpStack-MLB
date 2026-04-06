@@ -19,7 +19,7 @@ First run auto-downloads game data (MLB Stats API), player stats, pitching stats
 
 **Three-stage prediction pipeline:**
 1. **Elo model** (`elo_model.py` -> `MLBElo` class) -- base team ratings adjusted for home field, park factors, altitude, player strength, starting pitcher quality (K_PITCHER=6), rest days, travel fatigue, series adaptation, interleague factor, bullpen factor, opponent pitcher factor, injuries, and strength of schedule
-2. **XGBoost ensemble** (`enhanced_model.py`) -- 80% Elo / 20% XGBoost (default `elo_weight=0.8`) using 31 rolling features per team (15-game window via `TeamTracker`, includes Pythagorean win expectation, streaks, consistency, and trend)
+2. **XGBoost ensemble** (`enhanced_model.py`) -- 80% Elo / 20% XGBoost (default `elo_weight=0.8`) using 96 rolling features per team (15-game window via `TeamTracker`, includes Pythagorean win expectation, streaks, consistency, and trend)
 3. **Mega-ensemble** (`mega_predictor.py` + `mega_backtest.py`) -- 35 base models stacked via a meta-learner (XGBoost, ridge, or logistic). Produces a bounded adjustment (+/- max_adj, default 0.08) on top of the Elo+XGBoost probability. Models span 7 tiers: Core (Elo, XGBoost), Proven (HMM, Kalman, PageRank, LightGBM, CatBoost, MLP, LSTM), Exotic (GARCH, Fourier/Wavelet, Survival, Copula), Info/Physics (Shannon Entropy, Momentum, Markov Chain, Clustering, Game Theory), Classical Ratings (Poisson/Dixon-Coles, Glicko-2, Bradley-Terry, Monte Carlo, Random Forest), Sports-Specific (SRS, Colley Matrix, Log5, PythagenPat, Exponential Smoothing, Mean Reversion), Additional (SVM, Fibonacci, EVT, Benford), and Data Enrichment (Weather, Odds).
 4. **Platt calibration** (`platt.py`) -- logistic regression on raw probabilities for well-calibrated outputs
 
@@ -81,7 +81,7 @@ First run auto-downloads game data (MLB Stats API), player stats, pitching stats
    - K-decay and surprise-K for adaptive learning rate
 
 3. **XGBoost Ensemble** (`enhanced_model.py`)
-   - 31 rolling features per game (TeamTracker class, includes Pythagorean, streaks, consistency, trend)
+   - 96 rolling features per game (TeamTracker class, includes Pythagorean, streaks, consistency, trend)
    - Walk-forward training (no leakage): Elo-only for first 200 games
    - Default blend: 80% Elo / 20% XGBoost
    - Optional time-decay: transitions from 95% Elo early to 70% Elo late
@@ -309,7 +309,7 @@ Metrics reported: accuracy (%), log loss, Brier score. Calibration table bins pr
 - First `min_train` games (default 200): Elo-only predictions while accumulating training features
 - After that: XGBoost is trained on accumulated features and retrained every `retrain_every` games (default 50)
 - `TeamTracker` maintains rolling 15-game windows (runs scored/allowed, win%, margins, rest days) per team
-- Feature vector has 31 columns (`FEATURE_COLS` in `enhanced_model.py`): elo_prob, elo_diff, player_diff, per-team rolling stats, differentials, rest, Pythagorean win expectation, streaks, consistency, and trend
+- Feature vector has 96 columns (`FEATURE_COLS` in `enhanced_model.py`): elo_prob, elo_diff, player_diff, per-team rolling stats, differentials, rest, Pythagorean win expectation, streaks, consistency, and trend
 - After the walk-forward, fits both Platt and isotonic calibrators on ensemble probabilities
 - Saves the trained XGBoost booster to `mlb_xgb_model.json` and metadata to `mlb_enhanced_model.json`
 
