@@ -2,7 +2,7 @@
 
 A production-grade MLB game prediction system that fuses 35 independent models -- spanning Elo ratings, gradient boosting, Hidden Markov Models, Kalman filters, PageRank, neural networks, survival analysis, information theory, game theory, and classical baseball sabermetrics -- into a single calibrated probability through a walk-forward meta-learner. Every model trains on real MLB data pulled from completely free APIs (MLB Stats API, ESPN injuries, Open-Meteo weather). The system includes a full Predicts $1 binary contract trading ledger with Kelly criterion position sizing, live score tracking, auto-settlement, and monthly P&L charting. All 162-game-season parameters are tuned through a 7-phase exhaustive optimizer with multithreaded backtesting and optional GPU acceleration.
 
-**30 MLB teams** | **35 models** | **90+ tunable parameters** (32 Elo + 58 per-model) | **7-phase per-model optimizer** | **No paid APIs**
+**30 MLB teams** | **35 models** | **90+ tunable parameters** (34 Elo + 62 per-model) | **7-phase per-model optimizer** | **No paid APIs**
 
 ---
 
@@ -49,7 +49,7 @@ Every model runs independently on the same game-by-game walk-forward loop. Their
 | # | Model | Year | Method | Description |
 |---|-------|------|--------|-------------|
 | 1 | **Elo** | 1960 | Paired comparison rating | 24+ adjusters: home advantage, MOV, pitcher Elo, rest, travel, altitude, park factors, form, SOS, interleague, playoff detection. 30 teams, 700+ pitchers tracked individually. K=1.0 for 162-game season with logarithmic MOV. |
-| 2 | **XGBoost** | 2016 | Gradient boosted trees | 31 rolling features per game (win%, Pythagorean, streaks, consistency, scoring trend, rest, travel). Walk-forward training with 80/20 Elo/XGBoost blend. SHAP feature importance built in. |
+| 2 | **XGBoost** | 2016 | Gradient boosted trees | 96 rolling features per game (win%, Pythagorean, streaks, consistency, scoring trend, rest, travel). Walk-forward training with 80/20 Elo/XGBoost blend. SHAP feature importance built in. |
 
 ### Tier 1 -- Proven Models
 
@@ -281,7 +281,7 @@ Every parameter in this system was chosen with the specific structure of Major L
 | Command | Description | Time |
 |---------|-------------|------|
 | `backtest` | Walk-forward backtest + fit Platt calibration scaler | ~15s |
-| `enhanced` | XGBoost ensemble backtest (80/20 Elo/XGB blend, 31 features) | ~30s |
+| `enhanced` | XGBoost ensemble backtest (80/20 Elo/XGB blend, 96 features) | ~30s |
 | `enhanced decay` | Time-decayed ensemble (95% Elo early -> 70% Elo late season) | ~30s |
 | `shap` | SHAP feature importance analysis for XGBoost features | ~10s |
 | `sliding` | Sliding vs expanding window comparison | ~30s |
@@ -618,7 +618,7 @@ MLB/
 |-- advanced_stats.py           # Statcast/FanGraphs xwOBA, xERA, barrel rate
 |
 |-- backtest.py                 # All backtesting & optimization (~2100 lines)
-|-- enhanced_model.py           # XGBoost ensemble (31 features) + SHAP
+|-- enhanced_model.py           # XGBoost ensemble (96 features) + SHAP
 |-- single_param_opt.py         # Coordinate descent optimizer
 |
 |-- platt.py                    # Calibration (Platt, isotonic, beta, season regression)
@@ -803,7 +803,7 @@ Purged CV adds an embargo gap between train and test folds to prevent Elo moment
 ### Phase 4: Ensemble & Features
 
 ```
-enhanced          # XGBoost ensemble (31 features, 80/20 blend)
+enhanced          # XGBoost ensemble (96 features, 80/20 blend)
 shap              # Which features are driving XGBoost predictions?
 enhanced decay    # Time-decayed weighting (XGB gets more weight over season)
 ```
