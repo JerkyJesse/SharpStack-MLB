@@ -156,6 +156,7 @@ class MLBElo:
         self._xgb_model = None    # XGBoost booster (loaded from enhanced model)
         self._xgb_meta  = None    # XGBoost metadata (feature_cols, elo_weight)
         self._mega_predictor = None  # MegaPredictor (35-model ensemble)
+        self._mega_loading = False
         self.metadata = {
             "season_label": get_season_label(), "trained_games": 0,
             "saved_at": None, "source_file": None, "settings": self.settings_dict(),

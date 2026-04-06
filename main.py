@@ -523,12 +523,11 @@ TRADING:     predicts | balance | resolve | sell | mark | invert | chart
 
     model = build_model(csv_file)
 
-    print("\n" + chi("BASELINE PERFORMANCE:"))
-    _, baseline = backtest_model(csv_file, model=model, fit_platt=True)
     model._platt_scaler = load_platt_scaler()
-    acc_s = cok("%.2f%%" % baseline.get("accuracy", 0))
-    print("  Baseline accuracy: %s | LogLoss: %.4f | Brier: %.4f"
-          % (acc_s, baseline.get("log_loss", 0), baseline.get("brier", 0)))
+    if model._platt_scaler:
+        print(cdim("  Platt scaler loaded from previous backtest"))
+    else:
+        print(cwarn("  No Platt scaler found -- run 'backtest' to fit calibration"))
 
     if load_elo_settings().get("autoresolve_enabled", False):
         auto_resolve_finished_trades(model, verbose=True)
@@ -595,6 +594,8 @@ TRADING:     predicts | balance | resolve | sell | mark | invert | chart
                 cal_label = cdim(" (calibrated)") if model._platt_scaler else ""
                 prob_s    = cok("%.1f%%" % (prob * 100))
                 print("\n   %s - %s win probability%s" % (cok(winner), prob_s, cal_label))
+                if model._mega_predictor is None and getattr(model, '_mega_loading', False):
+                    print(cwarn("    Mega-ensemble still loading in background..."))
                 print("    %s Elo: %s  |  %s Elo: %s"
                       % (chi(team_a), cok("%.0f" % model.ratings[team_a]),
                          chi(team_b), cok("%.0f" % model.ratings[team_b])))

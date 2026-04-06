@@ -28,6 +28,8 @@ def _load_mega_background(model, sport, csv_file, elo_model_class, settings, pla
             logging.info("Mega-ensemble active (%s)", mega_pred.get_status())
     except Exception as e:
         logging.debug("Mega-ensemble not available: %s", e)
+    finally:
+        model._mega_loading = False
 
 
 def _calc_altitude_bonus(csv_file=GAMES_FILE):
@@ -178,6 +180,7 @@ def build_model(csv_file=GAMES_FILE):
         if not player_df.empty:
             model.set_player_stats(player_df)
         # Mega-ensemble predictor (loads in background thread)
+        model._mega_loading = True
         t = threading.Thread(
             target=_load_mega_background,
             args=(model, "mlb", csv_file, MLBElo, settings, player_df),
@@ -245,19 +248,14 @@ def build_model(csv_file=GAMES_FILE):
     player_df = load_player_stats()
     if not player_df.empty:
         model.set_player_stats(player_df)
-    # Mega-ensemble predictor (if meta-learner is trained)
-    try:
-        from mega_predictor import MegaPredictor
-        mega_pred = MegaPredictor(
-            sport="mlb", csv_file=csv_file,
-            elo_model_class=MLBElo, elo_settings=settings,
-            player_df=player_df,
-        )
-        if mega_pred._available:
-            model._mega_predictor = mega_pred
-            logging.info("Mega-ensemble active (%s)", mega_pred.get_status())
-    except Exception as e:
-        logging.debug("Mega-ensemble not available: %s", e)
+    # Mega-ensemble predictor (loads in background thread)
+    model._mega_loading = True
+    t = threading.Thread(
+        target=_load_mega_background,
+        args=(model, "mlb", csv_file, MLBElo, settings, player_df),
+        daemon=True,
+    )
+    t.start()
     model.metadata.update({
         "season_label":  get_season_label(),
         "trained_games": int(game_count),
