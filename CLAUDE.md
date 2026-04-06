@@ -67,8 +67,8 @@ First run auto-downloads game data (MLB Stats API), player stats, pitching stats
 
 2. **Elo Model** (`elo_model.py`)
    - `MLBElo` class with 30 MLB teams
-   - Base rating 1500, configurable K-factor (default 1.0 for 162-game season)
-   - Home field advantage (default 23.47 Elo, ~54% implied home win rate)
+   - Base rating 1500, configurable K-factor (default 2.62 for 162-game season)
+   - Home field advantage (default 37.63 Elo, ~55.3% implied home win rate)
    - Margin of victory adjustment (logarithmic, capped at mov_cap=19.9)
    - Player strength boost (z-scored team batting+pitching composite)
    - Starting pitcher quality (per-pitcher cumulative Elo ratings, 700+ tracked, K_PITCHER=6, 50% season regression)
@@ -251,27 +251,32 @@ First run auto-downloads game data (MLB Stats API), player stats, pitching stats
 ## Key MLB-Specific Design Choices
 
 ### Elo Parameters (defaults from `config.load_elo_settings`)
-- **K-factor = 1.0**: Much lower than NBA (8.23) because 162-game season provides more signal per team
+- **K-factor = 2.62**: Optimized for 162-game season (higher than original 1.0 -- allows faster adaptation)
 - **K_PITCHER = 6**: Per-pitcher Elo update speed (class constant on `MLBElo`), with 50% season regression
 - **k_decay = 2.07**: Adaptive K reduction as game count increases
-- **Home advantage = 23.47 Elo**: Reflects ~54% MLB home win rate (vs ~60% NBA)
-- **park_factor_weight = 0.0**: Scales how much park factors adjust predictions (Colorado=1.27, Miami=0.93; FanGraphs 5-year aggregate)
+- **Home advantage = 37.63 Elo**: Optimized MLB home field advantage (~55.3% implied home win rate)
+- **starter_boost = 88.08**: Starting pitcher quality boost (extremely impactful -- pitching dominates MLB)
+- **player_boost = 19.53**: Team player strength boost from composite scoring
+- **pace_factor = 41.87**: Run environment / pace adjustment (significant in MLB)
+- **mean_reversion = 34.23**: Regression after extreme results (strong signal in baseball)
+- **travel_factor = 13.71**: Cross-country travel fatigue
+- **form_weight = 7.08**: Recent form (last 15 games) adjustment
+- **division_factor = 6.64**: Divisional familiarity adjustment
+- **rest_factor = 2.80**: Rest days impact (minimal in daily-game MLB)
+- **sos_factor = 2.45**: Strength of schedule adjustment
+- **b2b_penalty = 26.51**: Back-to-back/doubleheader fatigue penalty
+- **altitude_factor = 12.48**: Coors Field altitude bonus (only Colorado)
+- **season_phase_factor = 9.35**: Early/late season adjustment
+- **playoff_hca_factor = 0.82**: Reduced home advantage in October playoffs
 - **interleague_factor = 2.04**: Elo adjustment for AL vs NL matchups
 - **series_adaptation = 3.92**: Adjustment for multi-game series familiarity
 - **bullpen_factor = 6.43**: Bullpen quality impact on win probability
 - **opp_pitcher_factor = 18.0**: Opponent starting pitcher quality adjustment
-- **east_travel_penalty = 0.0**: Extra penalty for eastward travel (jet lag)
-- **b2b_penalty = 26.51**: Back-to-back game fatigue penalty
-- **altitude_factor = 12.48**: Coors Field altitude bonus (only Colorado)
-- **season_phase_factor = 9.35**: Early/late season adjustment
 - **mov_cap = 19.9**: Maximum margin of victory cap
 - **mov_base = 0.3**: Margin of victory logarithmic base
-- **playoff_hca_factor = 0.934**: Reduced home advantage in October playoffs
-- **season_regress = 0.33**: 33% pull toward mean at season boundaries
 - **pyth_factor = 16.0**: Pythagorean expectation weighting
-- **starter_boost = 9.61**: Starting pitcher quality boost
-- **player_boost = 2.54**: Team player strength boost
 - **elo_scale = 400.0**: Elo logistic scale factor
+- **season_regress = 0.33**: 33% pull toward mean at season boundaries
 
 ### Mega-Ensemble MLB Defaults (from `mega_backtest.SPORT_DEFAULTS`)
 - **window = 15**: Rolling feature window (wider than NBA's 10 due to higher variance in baseball)
@@ -427,8 +432,8 @@ Enter a team name to start a prediction. Core commands:
 **Trading**: `predicts`, `balance`, `resolve`, `sell`, `mark`, `invert`, `chart`, `live`, `autoresolve`, `autoresolve on/off`
 
 **Elo Settings** (39 params, type `set` to see all):
-- `set k=4`, `set home=24`, `set starter=30`, `set rest=10`, `set b2b=75`
-- `set travel=8`, `set pace=19`, `set parkfactor=0`, `set interleague=0.5`
+- `set k=2.62`, `set home=38`, `set starter=88`, `set rest=3`, `set b2b=27`
+- `set travel=14`, `set pace=42`, `set parkfactor=0`, `set interleague=2`
 - `set bullpen=6`, `set opp_pitcher=18`, `set series=4`, `set east_travel=0`
 - `set kelly=quarter`, `set balance=1000`, `set autoresolve=true`
 
@@ -460,7 +465,7 @@ Enter a team name to start a prediction. Core commands:
 9. **Calibration**: run `rollingcal` for OOS calibration, `betacal` for asymmetry, `conformal` for coverage
 10. **P&L simulation**: run `kelly` to connect model quality to bankroll trajectory
 11. **Mega-ensemble**: run `mega` to train 35-model stack, then `mega optimize` for full tuning
-12. **Iterate**: adjust individual params with `set k=1.0`, `set home=23.47`, etc. -- always rerun `backtest` after to refit the Platt scaler
+12. **Iterate**: adjust individual params with `set k=2.62`, `set home=38`, etc. -- always rerun `backtest` after to refit the Platt scaler
 
 ### Position Management
 

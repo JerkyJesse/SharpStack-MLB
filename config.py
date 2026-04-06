@@ -107,13 +107,13 @@ def is_cache_stale(filepath, max_age_hours=CACHE_MAX_AGE_HOURS, data_type="games
 
 def load_elo_settings(filename=SETTINGS_FILE):
     defaults = {
-        "base_rating": 1500.0, "k": 1.0, "home_adv": 23.47,
+        "base_rating": 1500.0, "k": 2.62, "home_adv": 37.63,
         "use_mov": True, "autoresolve_enabled": False,
-        "player_boost": 2.54, "starter_boost": 9.61,
-        "rest_factor": 0.0, "form_weight": 0.0,
-        "travel_factor": 0.0, "sos_factor": 0.0,
-        "playoff_hca_factor": 0.934, "pace_factor": 5.0,
-        "division_factor": 0.0, "mean_reversion": 10.0,
+        "player_boost": 19.53, "starter_boost": 88.08,
+        "rest_factor": 2.80, "form_weight": 7.08,
+        "travel_factor": 13.71, "sos_factor": 2.45,
+        "playoff_hca_factor": 0.82, "pace_factor": 41.87,
+        "division_factor": 6.64, "mean_reversion": 34.23,
         "pyth_factor": 16.0, "home_road_factor": 4.04, "mov_base": 0.3,
         "season_regress": 0.33,
         "b2b_penalty": 26.51, "road_trip_factor": 0.0,
@@ -126,7 +126,7 @@ def load_elo_settings(filename=SETTINGS_FILE):
         "bullpen_factor": 6.43, "opp_pitcher_factor": 18.0,
         "k_decay": 2.07, "surprise_k": 0.0,
         "elo_scale": 400.0,
-        "starting_balance": 0.0, "kelly_fraction": 0.50,
+        "starting_balance": 125.0, "kelly_fraction": 0.50,
         "auto_kalshi": False,
     }
     if os.path.exists(filename):
